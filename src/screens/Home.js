@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import Typewriter from "../components/Typewriter";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import click from '../assets/audio/click.mp3'
+import click from '../assets/audio/click1.mp3'
 import DOTS from 'vanta/src/vanta.dots';
-import bg from '../assets/audio/bg.mp3'
 import StartPage from "./StartPage";
 export default function Home(props) {
     const [page,setPage] = useState(0)

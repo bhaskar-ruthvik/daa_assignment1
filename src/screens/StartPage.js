@@ -5,9 +5,10 @@ import { useEffect, useRef, useState } from "react";
 export default function StartPage(props){
    const [start,setStart] = useState(false)
    const navigate = useNavigate()
-    const [mute,setMute]= useState(false)
+    const [mute,setMute]= useState(true)
     function handleMute(){
       if(!mute){
+        
         // document.getElementById('bgm').src = '';
         document.getElementById('bgm').pause()
         setMute(true)
@@ -29,12 +30,11 @@ export default function StartPage(props){
         navigate('/path')
     }
     useEffect(()=>{
-        // if(document.getElementById('bgm').paused){
-        //     setMute(true)
-        // }
         if(!mute){
             document.getElementById('bgm').play()
-        } 
+        }
+       
+      
         
             const handleKeyDown = (event) => {
               if (event.key === 'Enter') {
@@ -44,7 +44,7 @@ export default function StartPage(props){
             };
         
             window.addEventListener('keydown', handleKeyDown);
-        
+
             return () => {
               window.removeEventListener('keydown', handleKeyDown);
             };
@@ -59,7 +59,6 @@ export default function StartPage(props){
         <div> 
            <div className='heading'>
            <Typewriter text="Convex Hull Visualisation" />
-           
            </div>
            <div className='canvas'>
            {/* <Link to='/path' style={{textDecoration: 'none', color:'inherit'}}> */}
