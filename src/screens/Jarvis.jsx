@@ -20,23 +20,17 @@ export default function Jarvis(props) {
     const pointsRef = useRef(points);
     const structRef = useRef(null);
     const addPoint = (event)=>{
-     console.log(event)
-     console.log(window.innerWidth,window.innerHeight)
      let x = (event.clientX- window.innerWidth/2)/120
      let y = (window.innerHeight/2 - event.clientY)/130
       pointsRef.current = [...pointsRef.current,{"point": [x,y,0]}]
       setPoints(pointsRef.current)
     }
-  const targetPosition = new Vector3(1, 2, 3); // Target position
-  const easing = 0.1; // Adjust easing for smoothness
-  function handleStart(){
-    window.localStorage.setItem("points",JSON.stringify(pointsRef.current))
-    navigate('jarvisvisu/1')
-  }
+    const [numSteps,setNumSteps] = useState(0)
   useEffect(()=>{
     pointsRef.current =  JSON.parse(window.localStorage.getItem("points"))
     const pointsArr = pointsRef.current.map((item)=>{return {x: item.point[0],y: item.point[1]}})
     const struct = returnJarvisStruct(pointsArr);
+    setNumSteps(3+struct.hullPoints.length)
     structRef.current = {startPoint: findInitialOrigin(pointsArr),pList: struct.pList,convexHull: struct.hullPoints}
     },[])
   const [open, setOpen] = useState(true);
@@ -61,6 +55,9 @@ export default function Jarvis(props) {
   <div className="axes" onClick={()=>setShowAxes((val)=>!val)}>
     <p className="space-mono-regular">{showAxes? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>} Show Axes</p>
   </div>
+  <div className="skip" onClick={()=>navigate(`/jarvisvisu/${numSteps}`)}>
+  <p className="space-mono-regular start">{'Skip to Hull >>'}</p>
+  </div>
   <div className="next">
     <h1 className="space-mono-regular start" onClick={handleNext}>{'Next >'}</h1>
     </div>
@@ -76,7 +73,7 @@ export default function Jarvis(props) {
     <OrbitControls/>
   </Canvas>
   
-  {open && <CustomModal step={params.stepid} id={1}/>}
+  {open && <CustomModal step={params.stepid} key={params.stepid} id={1} structRef={structRef}/>}
     </div>
     
   

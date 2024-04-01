@@ -18,14 +18,27 @@ export default function Kirkpatrick(props) {
   const kpsRef = useRef(null);
     const pointsRef = useRef(null);
     const tRef = useRef(null);
-    // const addPoint = (event)=>{
-    //  console.log(event)
-    //  console.log(window.innerWidth,window.innerHeight)
-    //  let x = (event.clientX- window.innerWidth/2)/120
-    //  let y = (window.innerHeight/2 - event.clientY)/130
-    //   pointsRef.current = [...pointsRef.current,{"point": [x,y,0]}]
-    //   setPoints(pointsRef.current)
-    // }
+    const [showGrid,setShowGrid] = useState(false)
+    const [showAxes,setShowAxes] = useState(true)
+    const [numSteps,setNumSteps] = useState(0)
+    const initDp = (pairs) => {
+      const dp =[]
+      if(params.stepid==0) return [];
+      else{
+          pairs.forEach((item,index)=>{
+              if(index == 0) dp.push(item.length + 4)
+              else dp.push(item.length+4)
+          })
+          dp.forEach((item,index)=>{
+              if(index!=0){
+                  dp[index] += dp[index-1]
+              }
+          })
+      }
+      
+      return dp;
+  }
+const [dp,setDp] = useState([])
     useEffect(()=>{
         pointsRef.current =  JSON.parse(window.localStorage.getItem("points"))
         const pointsArr = pointsRef.current.map((item)=>{return {x: item.point[0],y: item.point[1]}})
@@ -35,9 +48,13 @@ export default function Kirkpatrick(props) {
       xMedianRef.current = median
       structRef.current = structs
       maxMinRef.current = {pumax: pumax, pumin: pumin, plmin: plmin, plmax:plmax}
+      let sum = 6
+      structs.pairs.forEach((item)=> sum+=(item.length+4))
+      setNumSteps(sum)
       tRef.current = { "TLeft": TLeft,"Tright":TRight,"pL":pL,"pR":pR}
       const kps = kirkPatrickSeidel(pointsRef.current.map((item)=>{return {x: item.point[0],y: item.point[1]}}))
       kpsRef.current= kps
+      setDp([...initDp(structs.pairs)])
       
    
     },[])
@@ -62,6 +79,15 @@ export default function Kirkpatrick(props) {
      <div className="close" onClick={()=>navigate('/kirkpatrickvis')}>
     <p className="space-mono-regular">Restart</p>
   </div>
+  <div className="grid" onClick={()=>setShowGrid((val)=>!val)}>
+  <p className="space-mono-regular">{showGrid? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>}  Show Grid</p>
+  </div>
+  <div className="axes" onClick={()=>setShowAxes((val)=>!val)}>
+    <p className="space-mono-regular">{showAxes? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>} Show Axes</p>
+  </div>
+  <div className="skip" onClick={()=>navigate(`/kirkpatrickvisu/${numSteps}`)}>
+  <p className="space-mono-regular start">{'Skip to Hull >>'}</p>
+  </div>
   <div className="next">
     <h1 className="space-mono-regular start" onClick={handleNext}>{'Next >'}</h1>
     </div>
@@ -72,11 +98,11 @@ export default function Kirkpatrick(props) {
     <h1 className="space-mono-regular" onClick={handleToggle}>{open ? 'Hide Step' : 'Show Step'}</h1>
     </div>
 <Canvas >
-<Graph points={pointsRef} minmax={maxMinRef} step={params.stepid} kps={kpsRef} xmedian={xMedianRef} tref={tRef} structRef={structRef} key={params.stepid}/> 
+<Graph points={pointsRef} minmax={maxMinRef} step={params.stepid} kps={kpsRef} xmedian={xMedianRef} tref={tRef} structRef={structRef} key={params.stepid}  grid={showGrid} axes={showAxes}/> 
    
     <OrbitControls/>
   </Canvas>
-{open && <CustomModal step={params.stepid} id={0}/>}
+{open && <CustomModal step={params.stepid} id={0} dpRef={dp}/>}
     </div>
     
   

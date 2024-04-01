@@ -2,10 +2,20 @@ export const steps  = {
     0: [
         'In the first step of the Convex hull algorithm, we identify the points with highest and the least x-coordinates and mark them as pmin and pmax. If there are 2 or more points with the same x-coordinate then we find the coordinate with the highest y and mark it as pu_min or pu_max and the coordinate with the least y coordinate out of the points with the same x-coordinate as pl_min or pl_max.',
         'Now we compute the median x-coordinate of all the points and draw a line through the median with the equation x = a where a is the median of the points. After plotting the median, we split the set of points T to T_left and T_right which contains points to the left of the median line and the right of the median line respectively. We are currently computing the upper hull so we will ignore the points that have a y-coordinate less than the minimum y-coordinate of pu_min/pu_max. Finally, we will add pu_min to T_left and pu_max to T_right.',
-        'Once we have pL and pR, which are the upper bridge points given TUpper, we repeat this process iteratively by finding the bridge between pL and pumin and similarly between pR and pumax. When we join all the bridges that we get we see that it forms a connected bridge which forms the upper hull of the set of points.'
-    
+        'Inside the upper bridge function, we first pairs up points arbitrarily from S which is the set of points. If S has an odd number of points we add the last point to the list of candidates.',
+        'After we have our pairs, we find the slopes of all the lines joining the 2 points. If 2 points have the same x-coordinate, add the one with higher y-coordinate to candidates. Do not add the slope of this pair as it is undefined.', 
+        'Once we have all the slopes, we find the median slope K and add the slopes less than K to the set, SMALL, the slopes equal to K to the set, EQUAL and the slopes greater than K to the set, LARGE.', 
+        'Now we draw a line of slope K through each of the points that are not in candidates and find the ones with the highest y intercept and add them to the set, MAX.',
+        'The point with the minimum x-coordinate is pK and maximum x-coordinate is pM. Now we check relation between them and update candidates. If pK lies on left side of median and pM lies on right side, we have found our bridge. If both are on right side of median, insert the 2nd points in pairs that are a part of LARGE and EQUAL and all points in SMALL into candidates. Else, insert the 2nd points in pairs that are a part of SMALL and EQUAL and all points in LARGE to candidates and find UpperBridge(Candidates,median)',
+        'Once we have pL and pR, which are the upper bridge points given TUpper, we repeat this process iteratively by finding the bridge between pL and pumin and similarly between pR and pumax. When we join all the bridges that we get we see that it forms a connected bridge which forms the upper hull of the set of points.',
+        'Similarly, we find lower bridge points using the same procedure but with 2 changes. In lower bridge instead of MAX we have a MIN set, which contains points with minimum y-intercept. When pairs have same coordinate we take the one with the least x-coordinate and similarly in candidate updation as well the steps are mirrored so as the give the bottommost points instead of topmost as we want to find the lower bridge.',
+        'Once we have lower bridge, we repeat same procedure as before and find lower hull and then join upper and lower hulls in constant time. We now have the convex hull of the dataset.'
     ],
     1: [
-
+        'First we declare an arbitrary point that is outside the set S. We call this point O_init and in our implementation we have declared this random point as a point that is one unit away in x,y coordinates of the point in S with the minimum x and y coordinates.',
+        'Once we have this point we start from this point and sweep the plane in counter-clockwise direction until we come across a point that lies on the line.',
+        'Once we find this point, we set this point as our origin and sweep the plane again in the same counter-clockwise direction to look for the next point that lies on the line as it keeps rotating. An important thing to note is that, when multiple points are lying on the line, we choose the one that is closest to our current origin.',
+        'We repeat this process until we return back to the first point we discovered.',
+        'This is the convex hull of the given points using the Jarvis March Algorithm'
     ]
 }

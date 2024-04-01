@@ -1,12 +1,32 @@
-import { useEffect, useState } from "react";
-import Typewriter from "./Typewriter";
+import { useEffect } from "react";
+import { steps } from "../utils/steps";
 import TypewriterSmall from "./TypewriterSmall";
 
 export default function CustomModal(props){
-    let text1 = 'In the first step of the Convex hull algorithm, we identify the points with highest and the least x-coordinates and mark them as pmin and pmax. If there are 2 or more points with the same x-coordinate then we find the coordinate with the highest y and mark it as pu_min or pu_max and the coordinate with the least y coordinate out of the points with the same x-coordinate as pl_min or pl_max.'
-    let text2 = 'Now we compute the median x-coordinate of all the points and draw a line through the median with the equation x = a where a is the median of the points. After plotting the median, we split the set of points T to T_left and T_right which contains points to the left of the median line and the right of the median line respectively. We are currently computing the upper hull so we will ignore the points that have a y-coordinate less than the minimum y-coordinate of pu_min/pu_max. Finally, we will add pu_min to T_left and pu_max to T_right.'
-    let text3 = 'Once we have pL and pR, which are the upper bridge points given TUpper, we repeat this process iteratively by finding the bridge between pL and pumin and similarly between pR and pumax. When we join all the bridges that we get we see that it forms a connected bridge which forms the upper hull of the set of points.'
- 
+   const checkIndex = (step)=>{
+    if(props.dpRef.length == 0) return false
+    let found = false;
+    props.dpRef.forEach((item)=>{
+        found |= (item==step)
+    })
+    return found;
+}
+
+    const checkRange = (step)=>{
+        if(props.dpRef.length == 0){
+            return false
+        }
+        if(step>3 && step<=props.dpRef[0]){
+            return true;
+        }
+        let found = false
+       props.dpRef.forEach((item,index)=>{  
+        if(index < (props.dpRef.length - 1)){
+            found |= (step>item && step<=(props.dpRef[index+1]))
+        }
+       })
+       return found;
+    }
 
     const topleft = {
         top: "2vh",
@@ -21,11 +41,20 @@ export default function CustomModal(props){
         right: "2vw",
     }
     return (
-        <div className="modal" style={props.step <= 2? topright: props.step == 3 ? bottomright : bottomright}>
+        <div className="modal" style={props.step <= 2? topright: bottomright}>
         <div style={props.step == 3 ? {paddingTop: "1vh",paddingLeft: "2vw",paddingRight: "2vw"} : {paddingTop: "2vh",paddingLeft: "2vw",paddingRight: "2rem"}}>
-     {props.step<=2 &&   <TypewriterSmall text={text1}/>}
-     {props.step==3 && <TypewriterSmall text={text2} />}
-     {props.step==4 && <TypewriterSmall text={text3} />}
+        {props.id==0 && (props.step == 1 || props.step == 2) && <TypewriterSmall text={steps[0][0]}/> }
+        {props.id==0 && props.step == 3 && <TypewriterSmall text={steps[0][1]}/> }
+     {props.id==0 && checkRange(props.step) == true && <TypewriterSmall text={steps[0][2]}/>}
+    {props.id==0 && checkIndex(props.step-1) == true && <TypewriterSmall text={steps[0][4]}/>}
+    {props.id==0 && checkIndex(props.step-2) == true && <TypewriterSmall text={steps[0][5]}/>}
+    {props.id==0 && checkIndex(props.step-3) == true && <TypewriterSmall text={steps[0][6]}/>}
+    {props.id==0 && props.dpRef.length !=0 && props.step == props.dpRef[props.dpRef.length -1] +4 && <TypewriterSmall text={steps[0][7]}/>}
+    {props.id==0 && props.dpRef.length !=0 && props.step == props.dpRef[props.dpRef.length -1] +5 && <TypewriterSmall text={steps[0][8]}/>}
+    {props.id==0 && props.dpRef.length !=0 && props.step == props.dpRef[props.dpRef.length -1] +6 && <TypewriterSmall text={steps[0][9]}/>}
+    {props.id==1 && props.step<=4 && <TypewriterSmall text={steps[props.id][props.step-1]}/>}
+    {props.id == 1 && props.step>4 && props.step < props.structRef.current.convexHull.length+3 && <TypewriterSmall text={steps[props.id][steps[props.id].length-2]}/>}
+    {props.id == 1 && props.step>4 && props.step == props.structRef.current.convexHull.length+3 && <TypewriterSmall text={steps[props.id][steps[props.id].length-1]}/>}
         </div>
         </div>
     )

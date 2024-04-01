@@ -25,7 +25,6 @@ export default function PathPage(props){
         clickAudioRef.current.play()
       }
       function handleKeyDown(event){
-        console.log(event.key)
        if(event.key=='Backspace'){
         handleNavigate()
        } 

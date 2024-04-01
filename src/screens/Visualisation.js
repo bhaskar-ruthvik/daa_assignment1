@@ -6,6 +6,7 @@ import { Vector3 } from "three";
 import Graph from "../components/Graph";
 import { pointArray } from "../points";
 import JarvisGraph from "../components/JarvisGraph";
+import { generateRandomPoints } from "../utils/utils";
 export default function Visualisation(props) {
   
   const navigate = useNavigate();
@@ -14,8 +15,6 @@ export default function Visualisation(props) {
     const pointsRef = useRef(points);
     const structRef = useRef(null);
     const addPoint = (event)=>{
-     console.log(event)
-     console.log(window.innerWidth,window.innerHeight)
      let x = (event.clientX- window.innerWidth/2)/120
      let y = (window.innerHeight/2 - event.clientY)/130
       pointsRef.current = [...pointsRef.current,{"point": [x,y,0]}]
@@ -27,6 +26,11 @@ export default function Visualisation(props) {
     window.localStorage.setItem("points",JSON.stringify(pointsRef.current))
    if(props.id!=null && props.id==1){navigate('/jarvisvisu/1')} 
    else {navigate('/kirkpatrickvisu/1')}
+  }
+  function handleRandom(){
+    const points = generateRandomPoints(1000)
+    window.localStorage.setItem("points",JSON.stringify(points));
+    navigate(0)
   }
   // useFrame((state) => {
   //   const { camera } = state;
@@ -47,6 +51,9 @@ export default function Visualisation(props) {
   </div>
   <div className="next" onClick={() => {window.localStorage.setItem("points",JSON.stringify(pointArray));navigate(0)}}>
     <p className="space-mono-regular">Clear Points</p>
+  </div>
+  <div className="prev" onClick={handleRandom}>
+    <p className="space-mono-regular">Generate Random Points</p>
   </div>
   <div className="center">
     <h1 className="space-mono-regular start" onClick={handleStart}>Start Visualisation</h1>

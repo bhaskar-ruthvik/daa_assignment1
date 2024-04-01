@@ -425,6 +425,7 @@ export function upperBridge(S, alpha) {
 }
 
 function upperBridgeModified(S, alpha,candidateList,pairsList,SList,kList,KList,smallList,equalList,largeList,maxList,pmList,pkList) {
+   S.sort((a,b)=>a.x- b.x)
     SList.push(S);
     if (S.length <= 2) {
         return S;
@@ -591,6 +592,7 @@ export function returnUBstructures(S,alpha){
 
 export function lowerBridge(S, alpha) {
     // console.log("S length", S.length);
+    S.sort((a,b)=>a.x- b.x)
     if (S.length <= 2) {
         return S;
     }
@@ -694,7 +696,15 @@ export function lowerBridge(S, alpha) {
     // console.log("candidates", candidates);
     return lowerBridge(candidates, alpha);
 }
-
+export function generateRandomPoints(n){
+    let points = []
+    for(let i=0;i<n;i++){
+        points.push({
+            point: [Math.random()*12-6,Math.random()*6-3,0]
+        })
+    }
+    return points
+}
 const points = [
     { x: 0, y: 2 },
     { x: 2, y: 4 },

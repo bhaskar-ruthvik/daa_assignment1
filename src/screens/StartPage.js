@@ -38,7 +38,6 @@ export default function StartPage(props){
         
             const handleKeyDown = (event) => {
               if (event.key === 'Enter') {
-                console.log('Enter key pressed!');
                 handleStart()
               }
             };

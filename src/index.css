@@ -251,3 +251,9 @@ right: 3vw;
     left: 1.8vw;
   z-index: 1;
 }
+.skip{
+  position: absolute;
+    top: 8.4vh;
+    left: 1.8vw;
+  z-index: 1;
+}
