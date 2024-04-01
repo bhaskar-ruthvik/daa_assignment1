@@ -238,8 +238,10 @@ export default function Graph(props){
 {showGrid && <gridHelper args={[100,100]} rotation={[Math.PI/2,0,0]}/>}
 
 <pointLight position={[0, 0, 20]} intensity={1000} color={'white'}/>
-{(props.step> 0 && (props.step<=3 || props.step==dp[dp.length-1]+4)) && <Text ref={textMaxRef} position={[maxMinRef.current.pumax.x+0.25,maxMinRef.current.pumax.y,0.2]} fontSize={0.2}>pu_max</Text>}
-{props.step> 0 && (props.step<=3 || props.step==dp[dp.length-1]+4) && <Text ref={textMinRef} position={[maxMinRef.current.pumin.x-0.25,maxMinRef.current.pumin.y,0.2]} fontSize={0.2}>pu_min</Text>}
+{(props.step> 0 && (props.step<=3 || (props.step>=dp[dp.length-1]+4 && props.step<=dp[dp.length-1]+5) )) && <Text ref={textMaxRef} position={[maxMinRef.current.pumax.x+0.25,maxMinRef.current.pumax.y,0.2]} fontSize={0.2}>pu_max</Text>}
+{props.step> 0 && (props.step<=3 || (props.step>=dp[dp.length-1]+4 && props.step<=dp[dp.length-1]+5)) && <Text ref={textMinRef} position={[maxMinRef.current.pumin.x-0.25,maxMinRef.current.pumin.y,0.2]} fontSize={0.2}>pu_min</Text>}
+{props.step> 0 && props.step==dp[dp.length-1]+6 && <Text position={[maxMinRef.current.plmin.x-0.25,maxMinRef.current.plmin.y,0.3]} fontSize={0.2} color={'aqua'}>pl_min</Text>}
+{props.step> 0 && props.step==dp[dp.length-1]+6 && <Text position={[maxMinRef.current.plmax.x-0.25,maxMinRef.current.plmax.y,0.3]} fontSize={0.2} color={'aqua'}>pl_max</Text>}
 {props.step == 3 && <Text position={[xMedianRef+0.6,3.5,0.2]} fontSize={0.15} >{`Median=${Math.floor(xMedianRef*100)/100}`}</Text>}
 {props.step >= 3 && <Text position={[-3+xMedianRef,3,0.2]} fontSize={0.2} >TLeft</Text>}
 {props.step >= 3 && <Text position={[xMedianRef+3,3,0.2]} fontSize={0.2} >TRight</Text>}
@@ -264,11 +266,11 @@ export default function Graph(props){
       {props.step >= 3 && isRightIndex(props.step) && structRef.current.pairs[iterIndex].map((item,index)=>{return <Line key={index} points={[new Vector3(item[0].x,item[0].y,0),new Vector3(item[1].x,item[1].y,0)]} lineWidth={5} color={colors[index]} />}) }
       {props.step == 3 && <Line points={[new Vector3(xMedianRef,20,0),new Vector3(xMedianRef,-20,0)]} lineWidth={3} color={'red'}/>}
       {props.step>=3 && props.step==dp[dp.length-1]+4 && <AnimatedLine points={[new Vector3(tRef.current.pL.x,tRef.current.pL.y,0),new Vector3(tRef.current.pR.x,tRef.current.pR.y)]} lineWidth={5} color={'white'}/> }
-      {props.step>=3 &&props.step==dp[dp.length-1]+4 && <AnimatedLine points={[new Vector3(maxMinRef.current.pumax.x,maxMinRef.current.pumax.y,0),new Vector3(tRef.current.pR.x,tRef.current.pR.y)]} lineWidth={5} color={'white'}/> }
-      {props.step>=3 && props.step==dp[dp.length-1]+4 && <Line points={[new Vector3(tRef.current.pL.x,tRef.current.pL.y,0),target]} lineWidth={5} color={'white'}/> }
       {props.step>= 3 && isRightIndex(props.step-1) && <Line points={[new Vector3(-5,structRef.current.K[iterIndex]*-5,0),new Vector3(5,structRef.current.K[iterIndex]*5,0)]} lineWidth={5} />}
       {props.step>= 3 &&isRightIndex(props.step-2) && structRef.current.S[iterIndex].map((item,index)=>{if(structRef.current.S[iterIndex].length%2==1 && item.x == structRef.current.S[iterIndex][structRef.current.S[iterIndex].length-1].x && item.y == structRef.current.S[iterIndex][structRef.current.S[iterIndex].length-1].y){return null} else{ return <AnimatedLine key={index} points={[new Vector3(-10,structRef.current.K[iterIndex]*-10 + (item.y - structRef.current.K[iterIndex]*item.x),0),new Vector3(10,structRef.current.K[iterIndex]*10 + (item.y - structRef.current.K[iterIndex]*item.x),0)]} lineWidth={3} color={colors[index/2]} speed={10}/> }})}
-      {props.step>=3 && props.step>=dp[dp.length-1]+5 && kpsRef.current.map((item,index)=><AnimatedLine key={index} points={[new Vector3(item.x,item.y,0),new Vector3(kpsRef.current[(index+1)%kpsRef.current.length].x,kpsRef.current[(index+1)%kpsRef.current.length].y,0)]} lineWidth={5} color={'yellow'}/>)}
+      {props.step>=3 && (props.step==dp[dp.length-1]+5) && tRef.current.uh.map((item,index)=>index!= tRef.current.uh.length-1 && <AnimatedLine key={index} points={[new Vector3(item.x,item.y,0),new Vector3(tRef.current.uh[(index+1)%tRef.current.uh.length].x,tRef.current.uh[(index+1)%tRef.current.uh.length].y,0)]} lineWidth={5} color={'white'}/>)}
+      {props.step>=3 && props.step==dp[dp.length-1]+6 && tRef.current.lh.map((item,index)=>index!= tRef.current.lh.length-1 && <AnimatedLine key={index} points={[new Vector3(item.x,item.y,0),new Vector3(tRef.current.lh[(index+1)%tRef.current.lh.length].x,tRef.current.lh[(index+1)%tRef.current.lh.length].y,0)]} lineWidth={5} color={'white'}/>)}
+      {props.step>=3 && props.step>=dp[dp.length-1]+7 && kpsRef.current.map((item,index)=><AnimatedLine key={index} points={[new Vector3(item.x,item.y,0),new Vector3(kpsRef.current[(index+1)%kpsRef.current.length].x,kpsRef.current[(index+1)%kpsRef.current.length].y,0)]} lineWidth={5} color={'yellow'}/>)}
       <lineBasicMaterial/>
     </mesh>
 </group>

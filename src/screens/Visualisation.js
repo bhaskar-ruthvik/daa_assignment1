@@ -6,12 +6,14 @@ import { Vector3 } from "three";
 import Graph from "../components/Graph";
 import { pointArray } from "../points";
 import JarvisGraph from "../components/JarvisGraph";
-import { generateRandomPoints } from "../utils/utils";
+import { convertPoints, generateRandomPoints } from "../utils/utils";
 export default function Visualisation(props) {
   
   const navigate = useNavigate();
   const pointsInit = window.localStorage.getItem("points") == null ? pointArray : JSON.parse(window.localStorage.getItem("points"))
   const [points,setPoints] = useState(pointsInit)
+  const [numPoints,setNumPoints] = useState(window.localStorage.getItem("points") == null ? 0 : JSON.parse(window.localStorage.getItem("points")).length)
+  const [hovIdx,setHovIdx] = useState(0)
     const pointsRef = useRef(points);
     const structRef = useRef(null);
     const addPoint = (event)=>{
@@ -28,10 +30,34 @@ export default function Visualisation(props) {
    else {navigate('/kirkpatrickvisu/1')}
   }
   function handleRandom(){
-    const points = generateRandomPoints(1000)
+    const points = generateRandomPoints(numPoints)
     window.localStorage.setItem("points",JSON.stringify(points));
     navigate(0)
   }
+  function handleIp(e){
+    if(e.target.value == "" || parseInt(e.target.value) == NaN){
+      setNumPoints(0)
+    } 
+    else{
+      setNumPoints(parseInt(e.target.value))
+    }
+  }
+  function handleUpload(e){
+    const file = e.target.files[e.target.files.length-1]
+    const splits = file.name.split(".")
+    const extension = splits[splits.length-1] 
+    if(extension!="txt") return;
+    const reader = new FileReader()
+    reader.onload = async (e) => { 
+      const text = (e.target.result)
+     window.localStorage.setItem("points",text);
+    };
+    reader.readAsText(file)
+    navigate(0)
+  }
+  // useEffect(()=>{
+
+  // })
   // useFrame((state) => {
   //   const { camera } = state;
   //   const diff = targetPosition.sub(camera.position);
@@ -52,8 +78,18 @@ export default function Visualisation(props) {
   <div className="next" onClick={() => {window.localStorage.setItem("points",JSON.stringify(pointArray));navigate(0)}}>
     <p className="space-mono-regular">Clear Points</p>
   </div>
-  <div className="prev" onClick={handleRandom}>
-    <p className="space-mono-regular">Generate Random Points</p>
+  <div className="prev random" onClick={handleRandom}>
+    <p className={hovIdx == 0 ? "space-mono-regular start" :"space-mono-bold"} onMouseOver={()=>setHovIdx(0)}>Generate Random Points</p>
+  </div>
+  <div className="prev label">
+  <p className="space-mono-regular">Number of Points:</p>
+  </div>
+  <div className="prev slider">
+  <input type="text" className="textip" onChange={handleIp} value={numPoints} id="ipbox"></input>
+  </div>
+  <div className="prev upload" >
+  <label for="fileip" className={hovIdx == 1 ? "space-mono-regular start" :"space-mono-bold"} onMouseOver={()=>setHovIdx(1)}>Or Upload File (.txt)</label>
+  <input type="file" className="fileip" id="fileip" onChange={handleUpload}></input>
   </div>
   <div className="center">
     <h1 className="space-mono-regular start" onClick={handleStart}>Start Visualisation</h1>

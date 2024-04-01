@@ -7,7 +7,7 @@ import { Box, Line, OrbitControls, Point, Points } from '@react-three/drei';
 import { Vector3 } from "three";
 import Graph from "../components/Graph";
 import { pointArray } from "../points";
-import { findMaxX, findMinX, findPLowerX, findPUpperX, findXMedian, kirkPatrickSeidel, returnInitStructures, returnUBstructures, upperBridge, x } from "../utils/utils";
+import { findMaxX, findMinX, findPLowerX, findPUpperX, findXMedian, kirkPatrickSeidel, lowerHull, returnInitStructures, returnUBstructures, upperBridge, upperHull, x } from "../utils/utils";
 import CustomModal from "../components/Modal";
 export default function Kirkpatrick(props) {
   const params = useParams();
@@ -45,13 +45,15 @@ const [dp,setDp] = useState([])
       let [T,pumin,pumax,plmin,plmax,median,TUpper,TLower,TLeft,TRight] = returnInitStructures(pointsArr);
       let structs = returnUBstructures(T, median);
       let [pL,pR] = [structs.pL,structs.pR]
+      let upperHullPoints = upperHull(pumin,pumax,TUpper)
+      let lowerHullPoints = lowerHull(plmin,plmax,TLower)
       xMedianRef.current = median
       structRef.current = structs
       maxMinRef.current = {pumax: pumax, pumin: pumin, plmin: plmin, plmax:plmax}
-      let sum = 6
+      let sum = 7
       structs.pairs.forEach((item)=> sum+=(item.length+4))
       setNumSteps(sum)
-      tRef.current = { "TLeft": TLeft,"Tright":TRight,"pL":pL,"pR":pR}
+      tRef.current = { "TLeft": TLeft,"Tright":TRight,"pL":pL,"pR":pR,"uh": upperHullPoints,"lh":lowerHullPoints}
       const kps = kirkPatrickSeidel(pointsRef.current.map((item)=>{return {x: item.point[0],y: item.point[1]}}))
       kpsRef.current= kps
       setDp([...initDp(structs.pairs)])

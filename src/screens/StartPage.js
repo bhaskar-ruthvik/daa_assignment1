@@ -27,7 +27,7 @@ export default function StartPage(props){
         // document.getElementById('startButton').classList.remove('start');
         document.getElementById('startButton').classList.add('zoomed');
         await delay(500);
-        navigate('/path')
+        navigate('/convexdef')
     }
     useEffect(()=>{
         if(!mute){

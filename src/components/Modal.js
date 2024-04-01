@@ -22,7 +22,7 @@ export default function CustomModal(props){
         let found = false
        props.dpRef.forEach((item,index)=>{  
         if(index < (props.dpRef.length - 1)){
-            found |= (step>item && step<=(props.dpRef[index+1]))
+            found |= (step>item+3 && step<=(props.dpRef[index+1]))
         }
        })
        return found;
@@ -52,6 +52,7 @@ export default function CustomModal(props){
     {props.id==0 && props.dpRef.length !=0 && props.step == props.dpRef[props.dpRef.length -1] +4 && <TypewriterSmall text={steps[0][7]}/>}
     {props.id==0 && props.dpRef.length !=0 && props.step == props.dpRef[props.dpRef.length -1] +5 && <TypewriterSmall text={steps[0][8]}/>}
     {props.id==0 && props.dpRef.length !=0 && props.step == props.dpRef[props.dpRef.length -1] +6 && <TypewriterSmall text={steps[0][9]}/>}
+    {props.id==0 && props.dpRef.length !=0 && props.step == props.dpRef[props.dpRef.length -1] +7 && <TypewriterSmall text={steps[0][10]}/>}
     {props.id==1 && props.step<=4 && <TypewriterSmall text={steps[props.id][props.step-1]}/>}
     {props.id == 1 && props.step>4 && props.step < props.structRef.current.convexHull.length+3 && <TypewriterSmall text={steps[props.id][steps[props.id].length-2]}/>}
     {props.id == 1 && props.step>4 && props.step == props.structRef.current.convexHull.length+3 && <TypewriterSmall text={steps[props.id][steps[props.id].length-1]}/>}

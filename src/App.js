@@ -15,6 +15,7 @@ export default function App() {
       <Route path="kirkpatrickvis" element={<Visualisation key={0} id={0}/>} />
       <Route path="kirkpatrickvisu/:stepid" element={<Kirkpatrick />} />
       <Route index path="jarvisvis" element={<Visualisation key={1} id={1}/>} />
+      <Route path="convexdef" element={<AlgoMain key={2} id={2} heading="What is a Convex Hull?" />} />
       <Route path="jarvisvisu/:stepid" element={<Jarvis/>} />
       <Route path="/">
       <Route index element={<Home/>}/>

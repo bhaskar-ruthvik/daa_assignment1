@@ -257,3 +257,31 @@ right: 3vw;
     left: 1.8vw;
   z-index: 1;
 }
+.prev.random{
+  bottom: 3%;
+}
+.prev.slider{
+  bottom: 8vh;
+}
+.prev.label{
+  bottom: 9vh;
+}
+.prev.upload{
+  bottom: 2vh;
+}
+.textip,.textip:focus,.textip:active{
+  background-color: transparent;
+  color: white;
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+  border: 0;
+}
+.fileip{
+  visibility: hidden;
+}
+
+div .content{
+  height: 40vh;
+  overflow: scroll;
+}

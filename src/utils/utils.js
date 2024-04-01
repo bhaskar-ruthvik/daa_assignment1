@@ -705,6 +705,11 @@ export function generateRandomPoints(n){
     }
     return points
 }
+export function convertPoints(points){
+   return points.map(point => ({
+        point: [point.x, point.y, 0],
+      }));
+}
 const points = [
     { x: 0, y: 2 },
     { x: 2, y: 4 },
