@@ -1,16 +1,17 @@
-import { Line, Text } from "@react-three/drei";
-import { Vector3 } from "three";
+import { Box, Line, Sphere, Text, TorusKnot, shaderMaterial } from "@react-three/drei";
+import { BoxGeometry, Vector3 } from "three";
 import { CustomPoint } from "./Point";
 import {pointArray} from '../points';
 import { useEffect, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import AnimatedLine from "./AnimatedLine";
+import FakeGlowMaterial from "../utils/neon";
+import { useControls } from "leva";
 
 export default function JarvisGraph(props){
     const pointsRef = props.points;
     const [animate,setAnimate] = useState(true)
-    const lineRef = useRef(null)
-    const structRef = props.step == 0 ? null : props.structRef 
+    const structRef = props.step == 0 ? {} : props.structRef 
     const [angle,setAngle] = useState(0)
     const [start,setStart] = useState(props.step<2 ? new Vector3(0,0,0) :( props.step==2 ? new Vector3(structRef.current.startPoint.x,structRef.current.startPoint.y,0) : (props.step<3+structRef.current.convexHull.length ? new Vector3(structRef.current.convexHull[props.step-3].x,structRef.current.convexHull[props.step-3].y,0): new Vector3(0,0,0))))
     const [end,setEnd] =useState((props.step<2 ||(props.step>=2 && props.step >= 2+structRef.current.convexHull.length)) ? new Vector3(0,0,0) : new Vector3(structRef.current.convexHull[props.step-2].x,structRef.current.convexHull[props.step-2].y,0))
@@ -19,6 +20,7 @@ export default function JarvisGraph(props){
     const showGrid = props.grid == null ? false : props.grid
     const showAxes = props.axes == null ? true : props.axes
     const [flag,setFlag]= useState(true)
+   
     const findIndex = (point)=>{
         if(props.step<3) return -1;
         
@@ -72,10 +74,10 @@ export default function JarvisGraph(props){
 
      {props.step == 2 && <Line points={[new Vector3(structRef.current.startPoint.x,structRef.current.startPoint.y,0), new Vector3(structRef.current.startPoint.x+20*Math.cos(angle),structRef.current.startPoint.y+20*Math.sin(angle),0)]} lineWidth={5} color={'white'} /> }
      {props.step >= 3 && props.step<3+structRef.current.convexHull.length && <Line points={[new Vector3(structRef.current.convexHull[props.step-3].x,structRef.current.convexHull[props.step-3].y,0), new Vector3(structRef.current.convexHull[props.step-3].x+20*Math.cos(angle),structRef.current.convexHull[props.step-3].y+20*Math.sin(angle),0)]} lineWidth={5} color={'white'} /> }
-      {props.step>=2 && props.step>=3+structRef.current.convexHull.length && structRef.current.convexHull.map((item,index)=><AnimatedLine key={index} points={[new Vector3(item.x,item.y,0),new Vector3(structRef.current.convexHull[(index+1)%structRef.current.convexHull.length].x,structRef.current.convexHull[(index+1)%structRef.current.convexHull.length].y,0)]} lineWidth={5} color={'yellow'}/>)}
+      {props.step>=2 && props.step>=3+structRef.current.convexHull.length && structRef.current.convexHull.map((item,index)=><AnimatedLine key={index} points={[new Vector3(item.x,item.y,0),new Vector3(structRef.current.convexHull[(index+1)%structRef.current.convexHull.length].x,structRef.current.convexHull[(index+1)%structRef.current.convexHull.length].y,0)]} lineWidth={5} glow={true}/>)}
     {showAxes && <Line points={[new Vector3(-50,0,0),new Vector3(50,0,0)]} lineWidth={2} />}
    {showAxes && <Line points={[new Vector3(0,-50,0),new Vector3(0,50,0)]} lineWidth={2} />}
-      <lineBasicMaterial/>
+  <lineBasicMaterial/>
   </mesh>
 </group>
     );

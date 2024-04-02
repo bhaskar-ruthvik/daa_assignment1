@@ -34,5 +34,10 @@ export default function AnimatedLine(props){
     
        
     })
-    return( <Line points = {[props.points[0],target]} lineWidth={props.lineWidth} color={props.color}/>)
+    return(<group>
+  {props.glow!=null &&  <Line points = {[props.points[0],target]} lineWidth={props.lineWidth+4} color={'magenta'}/>}
+    <Line points = {[props.points[0],target]} lineWidth={props.lineWidth} color={props.color}/>
+    
+    </group>
+    )
 }

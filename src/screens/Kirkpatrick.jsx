@@ -43,7 +43,7 @@ const [dp,setDp] = useState([])
         pointsRef.current =  JSON.parse(window.localStorage.getItem("points"))
         const pointsArr = pointsRef.current.map((item)=>{return {x: item.point[0],y: item.point[1]}})
       let [T,pumin,pumax,plmin,plmax,median,TUpper,TLower,TLeft,TRight] = returnInitStructures(pointsArr);
-      let structs = returnUBstructures(T, median);
+      let structs = returnUBstructures(TUpper, median);
       let [pL,pR] = [structs.pL,structs.pR]
       let upperHullPoints = upperHull(pumin,pumax,TUpper)
       let lowerHullPoints = lowerHull(plmin,plmax,TLower)

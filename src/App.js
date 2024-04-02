@@ -7,6 +7,7 @@ import AlgoMain from "./screens/Algomain";
 import { pointArray } from "./points";
 import Kirkpatrick from "./screens/Kirkpatrick";
 import Jarvis from "./screens/Jarvis";
+import AlgDesc from "./screens/AlgDesc";
 export default function App() {
   return (
     
@@ -20,6 +21,8 @@ export default function App() {
       <Route path="/">
       <Route index element={<Home/>}/>
       <Route path="path" element={<PathPage/>} />
+      <Route path="jarvisdesc" element={<AlgDesc id={1}/>}/>
+      <Route path="kpsdesc" element={<AlgDesc id={0}/>}/>
       <Route path="jarvis">
         <Route index element={<AlgoMain key={1} heading="Jarvis March Algorithm"/>} />
       </Route>

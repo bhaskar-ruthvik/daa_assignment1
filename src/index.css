@@ -280,8 +280,25 @@ right: 3vw;
 .fileip{
   visibility: hidden;
 }
+span {
+  text-align: justify;
+}
 
-div .content{
-  height: 40vh;
-  overflow: scroll;
+.descdiv{
+  padding: 5vh 15vw;
+}
+
+.alghead{
+  padding-top: 3vh;
+  padding-bottom: 3vh;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.desc p{
+  text-align: justify;
+  font-size: 0.9rem;
+}
+.seevis{
+  text-align: center;
 }
