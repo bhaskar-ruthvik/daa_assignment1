@@ -54,8 +54,8 @@ export default function CustomModal(props){
     {props.id==0 && props.dpRef.length !=0 && props.step == props.dpRef[props.dpRef.length -1] +6 && <TypewriterSmall text={steps[0][9]}/>}
     {props.id==0 && props.dpRef.length !=0 && props.step == props.dpRef[props.dpRef.length -1] +7 && <TypewriterSmall text={steps[0][10]}/>}
     {props.id==1 && props.step<=4 && <TypewriterSmall text={steps[props.id][props.step-1]}/>}
-    {props.id == 1 && props.step>4 && props.step < props.structRef.current.convexHull.length+3 && <TypewriterSmall text={steps[props.id][steps[props.id].length-2]}/>}
-    {props.id == 1 && props.step>4 && props.step == props.structRef.current.convexHull.length+3 && <TypewriterSmall text={steps[props.id][steps[props.id].length-1]}/>}
+    {props.id == 1 && props.step>4 && props.structRef.current!=null && props.step < props.structRef.current.convexHull.length+3 && <TypewriterSmall text={steps[props.id][steps[props.id].length-2]}/>}
+    {props.id == 1 && props.step>4 && props.structRef.current!=null &&props.step == props.structRef.current.convexHull.length+3 && <TypewriterSmall text={steps[props.id][steps[props.id].length-1]}/>}
         </div>
         </div>
     )

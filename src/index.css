@@ -288,6 +288,8 @@ span {
 }
 
 .descdiv{
+  max-height: 60vh;
+  overflow: scroll;
   padding: 5vh 15vw;
 }
 
