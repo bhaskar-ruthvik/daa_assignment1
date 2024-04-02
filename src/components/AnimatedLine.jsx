@@ -14,7 +14,6 @@ export default function AnimatedLine(props){
     useFrame(()=>{
         const direction = (target.x - end.x) > 0 ? -1 : (target.x-end.x)==0 ? Math.sign((end.y-start.y)) : 1
             if(animate){
-               
                 if((start.x != end.x)){
                     setTarget((value)=>new Vector3(value.x+0.01*speed*direction,slope*(value.x+0.01*speed*direction)+c,0))
                     if( (target.x-end.x)*direction>= 0){
