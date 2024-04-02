@@ -32,6 +32,8 @@ export default function Jarvis(props) {
     const struct = returnJarvisStruct(pointsArr);
     setNumSteps(3+struct.hullPoints.length)
     structRef.current = {startPoint: findInitialOrigin(pointsArr),pList: struct.pList,convexHull: struct.hullPoints}
+
+    return ()=>{}
     },[])
   const [open, setOpen] = useState(true);
     const handleToggle = () => setOpen((open)=> !open);
@@ -46,17 +48,11 @@ export default function Jarvis(props) {
   return (
 
     <div className="visualisation">
-     <div className="close" onClick={()=>navigate('/jarvisvis')}>
-    <p className="space-mono-regular">Restart</p>
-  </div>
-  <div className="grid" onClick={()=>setShowGrid((val)=>!val)}>
-  <p className="space-mono-regular">{showGrid? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>}  Show Grid</p>
-  </div>
-  <div className="axes" onClick={()=>setShowAxes((val)=>!val)}>
-    <p className="space-mono-regular">{showAxes? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>} Show Axes</p>
-  </div>
-  <div className="skip" onClick={()=>navigate(`/jarvisvisu/${numSteps}`)}>
-  <p className="space-mono-regular start">{'Skip to Hull >>'}</p>
+     <div className="close" >
+    <p className="space-mono-regular" onClick={()=>navigate('/jarvisvis')}>Restart</p>
+  <p className="space-mono-regular" onClick={()=>setShowGrid((val)=>!val)}>{showGrid? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>}  Show Grid</p>
+    <p className="space-mono-regular"  onClick={()=>setShowAxes((val)=>!val)}>{showAxes? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>} Show Axes</p>
+  <p className="space-mono-regular start"  onClick={()=>navigate(`/jarvisvisu/${numSteps}`)}>{'Skip to Hull >>'}</p>
   </div>
   <div className="next">
     <h1 className="space-mono-regular start" onClick={handleNext}>{'Next >'}</h1>

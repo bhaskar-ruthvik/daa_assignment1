@@ -6,14 +6,12 @@ export default function Typewriter(props){
   const [audio,setAudio] = useState();
   const [cursorVisible, setCursorVisible] = useState(true);
   const typingSpeed = 80; // Adjust typing speed in milliseconds
-
   const completeText = props.text;
   const textRef = useRef(null);
   const audioRef = useRef(null);
-  useEffect(() => {
-    // setAudio(new Audio(typing))
-    const audio = audioRef.current = new Audio(typing);
 
+  useEffect(() => {
+    const audio = audioRef.current = new Audio(typing);
     const handleType = () => {
       if (audio) {
         audio.play();

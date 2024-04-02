@@ -66,17 +66,11 @@ export default function Visualisation(props) {
 
   return (
     <div className="visualisation">
-     <div className="close" onClick={()=>navigate('/')}>
-    <p className="space-mono-regular">X close</p>
-  </div>
-  <div className="grid" onClick={()=>setShowGrid((val)=>!val)}>
-  <p className="space-mono-regular">{showGrid? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>}  Show Grid</p>
-  </div>
-  <div className="axes" onClick={()=>setShowAxes((val)=>!val)}>
-    <p className="space-mono-regular">{showAxes? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>} Show Axes</p>
-  </div>
-  <div className="next" onClick={() => {window.localStorage.setItem("points",JSON.stringify(pointArray));navigate(0)}}>
-    <p className="space-mono-regular">Clear Points</p>
+     <div className="close" >
+    <p className="space-mono-regular" onClick={()=>navigate('/')}>X close</p>
+  <p className="space-mono-regular"  onClick={()=>setShowGrid((val)=>!val)}>{showGrid? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>}  Show Grid</p>
+    <p className="space-mono-regular" onClick={()=>setShowAxes((val)=>!val)}>{showAxes? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>} Show Axes</p>
+    <p className="space-mono-regular" onClick={() => {window.localStorage.setItem("points",JSON.stringify(pointArray));navigate(0)}}>Clear Points</p>
   </div>
   <div className="prev random" onClick={handleRandom}>
     <p className={hovIdx == 0 ? "space-mono-regular start" :"space-mono-bold"} onMouseOver={()=>setHovIdx(0)}>Generate Random Points</p>

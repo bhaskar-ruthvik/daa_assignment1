@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { steps } from "../utils/steps"
 import { useNavigate } from "react-router-dom"
 import { lowerHull, returnInitStructures, returnJarvisStruct, returnUBstructures, upperHull } from "../utils/utils"
@@ -22,9 +22,11 @@ export default function AlgDesc(props){
         <div className="space-mono-bold descdiv">
             <div className="desc">
                 <h1 className="start alghead" >KirkPatrick-Seidel Algorithm</h1>
-                {steps[props.id].map((item,index)=>{
+                {console.log(steps)}
+                {steps[parseInt(props.id)].map((item,index)=>{
                    return <div>
                    <p>{index+1}. {item}<br /></p>
+                   {index==steps[props.id].length-2 && <h3 className="space-mono-regular start seevis" onClick={()=>{navigate(`/kirkpatrickvisu/${nsKps-1}`)}}>{"> See Visualisation"}</h3>}
                    {index==steps[props.id].length-1 && <h3 className="space-mono-regular start seevis" onClick={()=>{navigate(`/kirkpatrickvisu/${nsKps}`)}}>{"> See Visualisation"}</h3>}
                    </div>
                 })}

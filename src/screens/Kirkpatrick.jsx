@@ -78,17 +78,11 @@ const [dp,setDp] = useState([])
 
   return (
     <div className="visualisation">
-     <div className="close" onClick={()=>navigate('/kirkpatrickvis')}>
-    <p className="space-mono-regular">Restart</p>
-  </div>
-  <div className="grid" onClick={()=>setShowGrid((val)=>!val)}>
-  <p className="space-mono-regular">{showGrid? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>}  Show Grid</p>
-  </div>
-  <div className="axes" onClick={()=>setShowAxes((val)=>!val)}>
-    <p className="space-mono-regular">{showAxes? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>} Show Axes</p>
-  </div>
-  <div className="skip" onClick={()=>navigate(`/kirkpatrickvisu/${numSteps}`)}>
-  <p className="space-mono-regular start">{'Skip to Hull >>'}</p>
+     <div className="close" >
+    <p className="space-mono-regular" onClick={()=>navigate('/kirkpatrickvis')}>Restart</p>
+  <p className="space-mono-regular"  onClick={()=>setShowGrid((val)=>!val)}>{showGrid? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>}  Show Grid</p>
+    <p className="space-mono-regular" onClick={()=>setShowAxes((val)=>!val)}>{showAxes? <i class="fas fa-check-square"></i> : <i class="fa-solid fa-square-xmark"></i>} Show Axes</p>
+  <p className="space-mono-regular start" onClick={()=>navigate(`/kirkpatrickvisu/${numSteps}`)}>{'Skip to Hull >>'}</p>
   </div>
   <div className="next">
     <h1 className="space-mono-regular start" onClick={handleNext}>{'Next >'}</h1>

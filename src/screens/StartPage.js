@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import Typewriter from "../components/Typewriter";
 import { useEffect, useRef, useState } from "react";
+import { pointArray } from "../points";
 
 export default function StartPage(props){
    const [start,setStart] = useState(false)
@@ -30,6 +31,7 @@ export default function StartPage(props){
         navigate('/convexdef')
     }
     useEffect(()=>{
+      if(window.localStorage.getItem("points")==null) window.localStorage.setItem("points",JSON.stringify(pointArray))
         if(!mute){
             document.getElementById('bgm').play()
         }

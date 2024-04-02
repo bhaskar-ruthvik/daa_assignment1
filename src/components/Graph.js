@@ -26,7 +26,7 @@ export default function Graph(props){
  
     const initDp = () => {
         const dp =[]
-        if(props.step==0) return [];
+        if(props.step==0 || structRef == null) return [];
         else{
             structRef.current.pairs.forEach((item,index)=>{
                 if(index == 0) dp.push(item.length + 4)

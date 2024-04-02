@@ -5,8 +5,6 @@ import {pointArray} from '../points';
 import { useEffect, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import AnimatedLine from "./AnimatedLine";
-import FakeGlowMaterial from "../utils/neon";
-import { useControls } from "leva";
 
 export default function JarvisGraph(props){
     const pointsRef = props.points;
@@ -14,7 +12,7 @@ export default function JarvisGraph(props){
     const structRef = props.step == 0 ? {} : props.structRef 
     const [angle,setAngle] = useState(0)
     const [start,setStart] = useState(props.step<2 ? new Vector3(0,0,0) :( props.step==2 ? new Vector3(structRef.current.startPoint.x,structRef.current.startPoint.y,0) : (props.step<3+structRef.current.convexHull.length ? new Vector3(structRef.current.convexHull[props.step-3].x,structRef.current.convexHull[props.step-3].y,0): new Vector3(0,0,0))))
-    const [end,setEnd] =useState((props.step<2 ||(props.step>=2 && props.step >= 2+structRef.current.convexHull.length)) ? new Vector3(0,0,0) : new Vector3(structRef.current.convexHull[props.step-2].x,structRef.current.convexHull[props.step-2].y,0))
+    const [end,setEnd] =useState((props.step<2 ||(props.step>=2 && structRef.current!=null && props.step >= 2+structRef.current.convexHull.length)) ? new Vector3(0,0,0) : new Vector3(structRef.current.convexHull[props.step-2].x,structRef.current.convexHull[props.step-2].y,0))
     const dir = end.sub(start)
     const [ang,setAng] = useState(dir.y < 0 ? 2* Math.PI - dir.angleTo(new Vector3(1,0,0)) : dir.angleTo(new Vector3(1,0,0)))
     const showGrid = props.grid == null ? false : props.grid

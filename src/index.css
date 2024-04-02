@@ -241,19 +241,22 @@ right: 3vw;
 
 .grid{
   position: absolute;
-    top: 2.8vh;
+    top: 3vh;
     left: 1.8vw;
   z-index: 1;
 }
 .axes{
+  height: max-content;
+  overflow: auto;
   position: absolute;
-    top: 5.6vh;
+    top: 6vh;
     left: 1.8vw;
   z-index: 1;
 }
 .skip{
+  overflow: auto;
   position: absolute;
-    top: 8.4vh;
+    top: 9vh;
     left: 1.8vw;
   z-index: 1;
 }
@@ -301,4 +304,12 @@ span {
 }
 .seevis{
   text-align: center;
+}
+
+#invis{
+  opacity: 0;
+}
+
+.visualisation .close{
+  padding: 0.2vh;
 }
