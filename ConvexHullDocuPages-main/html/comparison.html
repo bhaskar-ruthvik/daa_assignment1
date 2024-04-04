@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <title>Comparison between Jarvis March and Kirkpatrick-Seidel Algorithm</title>
+        <link rel="stylesheet" href="../css/styles1.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Kanit&family=Lora:wght@700&family=Montserrat:wght@700&family=Open+Sans:wght@800&display=swap"
+            rel="stylesheet">
+    </head>
+    <body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+        <div class="container-fluid" id="task1" style="padding-bottom: 100px;">
+            <div class="row task1">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1">
+                    <h1 class="subhead">Analysis of Jarvis March and Kirkpatrick-Seidel</h1>
+                    <p>This is a side-by-side comparison of 2 Convex Hull algorithms: Jarvis March and Kirkpatrick-Seidel algorithm. 
+                        Jarvis March, also called Gift-wrapping algorithm was published in 1973. It is a simple solution
+                        to the convex hull problem. It aims to iteratively find the least clockwise point from a given origin, 
+                        sweeping radially in anti-clockwise direction until you find the new origin, thereby covering the Convex
+                        Hull points in order. It is analogous to how the edges of a box get covered one by one when a box is gift wrapped.<br>
+                        <br>
+                        Kirkpatrick-Seidel is a slightly more efficient way of approaching the Convex Hull problem, particularly 
+                        in dealing with situations with collinear points. It is a Divide and Conquer approach that proceeds as follows: 
+                        The set of points is divided into two sets by a median line. We then find all the edges of the convex-hull that
+                        intersect the median line, and discard points that cannot be a part of the convex-hull, with atleast a quarter 
+                        of the total points being discarded in a single iteration. Finally, we recursively call the algorithm on the 
+                        reduced search space. <br><br>
+                        To perform the analysis, first we consider 5 sets of points and run both the Convex Hull algorithms on each set and
+                        compare the runtime of the 2 algorithms. We will also analyze the asymptotic time complexity of the algorithms.
+                </div>
+            </div>
+            
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h2> <u>RESULTS</u> </h2>
+                    <h3 id = "ptHeading"> Input Points: </h3>
+                    <p> { x: 0, y: 2 }, 
+                        { x: 4, y: 4 }, 
+                        { x: 4, y: 0 }, 
+                        { x: 6, y: 2 }, 
+                        { x: 2, y: 4 }, 
+                        { x: 2, y: 0 } 
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="image-container1">
+                    <img src="../css/ptsJM.png" alt="Image description" class="image">
+                </div>
+
+                <div class="image-container1">
+                    <img src="../css/ptsKPS.png" alt="Image description" class="image">
+                </div>
+            </div><br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Input Points: </h3>
+                    <p> { x: 0, y: 2 }, 
+                        { x: 4, y: 4 }, 
+                        { x: 4, y: 0 }, 
+                        { x: 6, y: 2 }, 
+                        { x: 2, y: 4 }, 
+                        { x: 2, y: 0 }, 
+                        { x: 3, y: 3 }, 
+                        { x: 4, y: 0 }, 
+                        { x: 5, y: 5 }, 
+                        { x: 1, y: 1 } 
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="image-container">
+                    <img src="../css/p1JM.png" alt="Image description" class="image">
+                </div>
+
+                <div class="image-container">
+                    <img src="../css/p1KPS.png" alt="Image description" class="image">
+                </div>
+            </div> <br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Input Points: </h3>
+                    <p> { x: 2, y: 1 }, 
+                        { x: 4, y: 3 }, 
+                        { x: 6, y: 5 }, 
+                        { x: 1, y: 3 }, 
+                        { x: 3, y: 1 }, 
+                        { x: 5, y: 4 }, 
+                        { x: 0, y: 2 }, 
+                        { x: 2, y: 4 }, 
+                        { x: 4, y: 0 }, 
+                        { x: 6, y: 2 }   
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="image-container">
+                    <img src="../css/p2JM.png" alt="Image description" class="image">
+                </div>
+
+                <div class="image-container">
+                    <img src="../css/p2KPS.png" alt="Image description" class="image">
+                </div>
+            </div> <br> <br>
+            
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Input Points: </h3>
+                    <p> { x: 1, y: 1 },
+                        { x: 2, y: 3 },
+                        { x: 4, y: 1 },
+                        { x: 3, y: 5 },
+                        { x: 5, y: 2 },
+                        { x: 2, y: 4 },
+                        { x: 6, y: 6 },
+                        { x: 0, y: 2 },
+                        { x: 3, y: 1 },
+                        { x: 1, y: 4 },
+                        { x: 4, y: 3 },
+                        { x: 2, y: 1 },
+                        { x: 5, y: 5 },
+                        { x: 4, y: 0 },
+                        { x: 0, y: 4 }   
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="image-container">
+                    <img src="../css/p3JM.png" alt="Image description" class="image">
+                </div>
+
+                <div class="image-container">
+                    <img src="../css/p3KPS.png" alt="Image description" class="image">
+                </div>
+            </div> <br> <br>
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Input Points: </h3>
+                    <p> { x: 2, y: 3 },
+                        { x: 5, y: 1 },
+                        { x: 3, y: 5 },
+                        { x: 4, y: 2 },
+                        { x: 1, y: 4 },
+                        { x: 6, y: 6 },
+                        { x: 0, y: 2 },
+                        { x: 3, y: 1 },
+                        { x: 4, y: 0 },
+                        { x: 6, y: 4 },
+                        { x: 2, y: 1 },
+                        { x: 5, y: 5 },
+                        { x: 0, y: 3 },
+                        { x: 2, y: 4 },
+                        { x: 4, y: 6 }   
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="image-container">
+                    <img src="../css/p4JM.png" alt="Image description" class="image">
+                </div>
+
+                <div class="image-container">
+                    <img src="../css/p4KPS.png" alt="Image description" class="image">
+                </div>
+            </div> <br> <br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1">
+                    <h3 id = "ptHeading"> Observations: </h3>
+                    <p> From the above results obtained by running given sets of points on both the Convex Hull Algorithms, 
+                        we can see that the Jarvis March algorithm outperforms the Kirkpatrick-Seidel algorithm significantly
+                        in all cases. This could be attributed to the fact that the value of 'n', or number of points in the 
+                        point set we have considered is quite small. However, for large datasets, it is quite likely that the
+                        opposite will be observed, and the efficiency of KPS for large 'n' will become apparent.
+                </div>
+            </div><br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1">
+                    <h2> <u>Time Complexity Analysis: </u></h2>
+                </div>
+            </div>
+            <div class = "row">
+                <div class="write-up">
+                    <h2 class = "algos">Kirkpatrick-Seidel</h2>
+                    <p>Kirk-patrick-seidel is a divide and conquer algorithm. The upperHull and lowerHull functions are 
+                        recursively called on the set of points until the size of the set reaches a base case 
+                        (less than or equal to 2). In each recursive call, the median splits the data points into 2 equal 
+                        sets of Tleft and Tright and hence for a set of size n to be divided into a set of size 2 or lesser 
+                        we need log(h) recursive calls, since the tree constructed can have a height of atmost 'h', where h
+                        is the number of convexHull points. <br><br>Now, at each recursive call we have:<br>
+                        Finding the median x-coordinate: O(n) in the worst case.<br>
+                        Partitioning the set: O(n)<br>
+                        Bridge finding (upperBridge and lowerBridge): O(n) on average<br>
+                        Filtering points: O(n)<br><br>
+                        Therefore, the overall complexity is O(nlogh).<br>
+                    </p>
+                </div>
+                <div class="write-up">
+                    <h2 class = "algos">Jarvis March</h2>
+                    <p>The loop runs until the current point becomes the initial point again. Therefore, there are h iterations of the loop where h is the number of points in the convex-hull.and at each iteration there are n-1 comparisons (with every other point) to find the next point of the convex-hull.
+                        therefore , the time complexity is:
+                        O(h(n-1)) = O(hn) 
+                    </p>
+                </div>
+            </div>
+
+
+    </body>
+</html>

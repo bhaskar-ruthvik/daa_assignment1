@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Jarvis March</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit&family=Lora:wght@700&family=Montserrat:wght@700&family=Open+Sans:wght@800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <div class="container-fluid" id="task1">
+        <div class="row task1">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8 task1">
+                <h1 class="subhead">Jarvis March Algorithm</h1>
+                <p>It's also called the gift wrapping algorithm and is a simple solution to the convex hull problem.
+                The algorithm starts by choosing the leftmost point as this point is guaranteed to be part of the convex-hull. It then
+                iteratively chooses the point that is reached with the least clockwise rotation.
+                And in this way we get the points of the convex hull.
+                It is analogous to how the edges of a box get covered one by one when a box is gift wrapped.
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="image-container">
+                <img src="../css/jarmar.png" alt="Image description" class="image">
+            </div>
+            <div class="write-up">
+                <br><br>
+                <h2>Jarvis March Main Function</h2>
+                <p>It calls the findInitialOrigin function to find a starting point that is the lowest among the points that have least
+                x-coordinate.
+                It initializes another variable to store the point with the minimum angle in each iteration.
+                It also creates an empty list to store the points that form the convex hull.
+                The function enters a loop inside which:
+                It initializes a variable minAngle to a large value to keep track of the minimum angle found in this iteration.
+                It iterates through all points except the current point to find the next point that forms a counter-clockwise turn in
+                the convex hull boundary.It calculates the angle between the current point and other points using the findAngle
+                function.
+                It compares the calculated angle with the current minimum angle and if the calculated angle is lesser than the current
+                minimum angle then the current minimum angle is updated.
+                It updates the current point to the point found in this iteration.
+                The loop continues till the current point again becomes the initial point.
+                The function then returns the list that stores the points that form the convex hull.
+                <!-- <h2>Complexity</h2>
+                <p>The loop runs until the current point becomes the initial point again. Therefore, there are h iterations of the loop
+                where h is the number of points in the convex-hull.and at each iteration there are n-1 comparisons (with every other
+                point) to find the next point of the convex-hull.
+                therefore , the time complexity is:
+                O(h(n-1)) = O(hn)</p> -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

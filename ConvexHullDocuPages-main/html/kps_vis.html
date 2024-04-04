@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <title>Visualization of Kirkpatrick-seidel algorithm</title>
+        <link rel="stylesheet" href="../css/styles1.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Kanit&family=Lora:wght@700&family=Montserrat:wght@700&family=Open+Sans:wght@800&display=swap"
+            rel="stylesheet">
+    </head>
+    <body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+        <div class="container-fluid" id="task1" style="padding-bottom: 100px;">
+            <div class="row task1">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1">
+                    <h1 class="subhead">KPS Visualization</h1>
+                    <h2><u>Brief description of the Algorithm</u></h2>
+                    <p><br>
+                        Kirkpatrick-seidel is an algorithm to compute the convex hull of a set of points by using a 
+                        Divide-and-Conquer approach. The Divide step comprises dividing the set of points into 2 
+                        equal subsets based on their x-coordinate relative to a median line, while in the Conquer step, 
+                        we recursively find the convex hull of each of subset. Finally, you merge the 2 convex hulls 
+                        by finding the upper and lower bridges.
+                    </p>
+                </div>
+            </div>
+            
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h2> <u>Step-by-step Visualization</u> </h2>
+                </div>
+            </div>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Step 1: </h3>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="image-container1">
+                    <img height = "300" src="../css/kpsStep1.jpeg" alt="Image description">
+                </div>
+
+                <div class="write-up">
+                    <p>
+                        In the first step of the Convex hull algorithm, we identify the points with highest and the
+                        least x-coordinates and mark them as pmin and pmax. If there are 2 or more points with the
+                        same x-coordinate then we find the coordinate with the highest y and mark it as pu_min or 
+                        pu_max and the coordinate with the least y coordinate out of the points with the same 
+                        x-coordinate as pl_min or pl_max.
+                    </p>
+                </div>
+            </div><br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Step 2: </h3>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="write-up">
+                    <p>
+                        Now we compute the median x-coordinate of all the points and draw a line through the median with the 
+                        equation x = a where a is the median of the points. After plotting the median, we split the set of 
+                        points T to T_left and T_right which contains points to the left of the median line and the right of
+                        the median line respectively. We are currently computing the upper hull so we will ignore the points
+                        that have a y-coordinate less than the minimum y-coordinate of pu_min/pu_max. Finally, we will add 
+                        pu_min to T_left and pu_max to T_right.
+                    </p>
+                </div>
+
+                <div class="image-container1">
+                    <img height = "300" src="../css/kpsStep2.jpeg" alt="Image description">
+                </div>
+
+                
+            </div><br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Step 3: </h3>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="image-container1">
+                    <img height = "300" src="../css/kpsStep3.jpeg" alt="Image description">
+                </div>
+
+                <div class="write-up">
+                    <p>
+                        Inside the upper bridge function, we first pairs up points arbitrarily from S which is the set of 
+                        points. If S has an odd number of points we add the last point to the list of candidates.
+                    </p>
+                </div>
+            </div><br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Step 4: </h3>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="write-up">
+                    <p>
+                        Once we have all the slopes, we find the median slope K and add the slopes less than K to the set, 
+                        SMALL, the slopes equal to K to the set, EQUAL and the slopes greater than K to the set, LARGE.
+                    </p>
+                </div>
+
+                <div class="image-container1">
+                    <img height = "300" src="../css/kpsStep4.jpeg" alt="Image description">
+                </div>
+
+            </div><br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Step 5: </h3>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="image-container1">
+                    <img height = "300" src="../css/kpsStep5.jpeg" alt="Image description">
+                </div>
+
+                <div class="write-up">
+                    <p>
+                        Now we draw a line of slope K through each of the points that are not in candidates and find the 
+                        ones with the highest y intercept and add them to the set, MAX.
+                    </p>
+                </div>
+            </div><br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Step 6: </h3>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="write-up">
+                    <p>
+                        The point with the minimum x-coordinate is pK and maximum x-coordinate is pM. Now we check 
+                        relation between them and update candidates. If pK lies on left side of median and pM lies on 
+                        right side, we have found our bridge. If both are on right side of median, insert the 2nd 
+                        points in pairs that are a part of LARGE and EQUAL and all points in SMALL into candidates. 
+                        Else, insert the 2nd points in pairs that are a part of SMALL and EQUAL and all points in 
+                        LARGE to candidates and find UpperBridge(Candidates,median).
+                    </p>
+                </div>
+                
+                <div class="image-container1">
+                    <img height = "300" src="../css/kpsStep6.jpeg" alt="Image description">
+                </div>
+
+               
+            </div><br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Step 7: </h3>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="image-container1">
+                    <img height = "300" src="../css/kpsStep7.jpeg" alt="Image description">
+                </div>
+
+                <div class="write-up">
+                    <p>
+                        Now we draw a line of slope K through each of the points that are not in candidates and find the 
+                        ones with the highest y intercept and add them to the set, MAX.
+                    </p>
+                </div>
+            </div><br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Step 8: </h3>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="write-up">
+                    <p>
+                        The point with the minimum x-coordinate is pK and maximum x-coordinate is pM. Now we check 
+                        relation between them and update candidates. If pK lies on left side of median and pM lies on 
+                        right side, we have found our bridge. If both are on right side of median, insert the 2nd 
+                        points in pairs that are a part of LARGE and EQUAL and all points in SMALL into candidates. 
+                        Else, insert the 2nd points in pairs that are a part of SMALL and EQUAL and all points in 
+                        LARGE to candidates and find UpperBridge(Candidates,median).
+                    </p>
+                </div>
+
+                <div class="image-container1">
+                    <img height = "300" src="../css/kpsStep8.jpeg" alt="Image description">
+                </div>
+
+                
+            </div><br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Step 9: </h3>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="image-container1">
+                    <img height = "300" src="../css/kpsStep9.jpeg" alt="Image description">
+                </div>
+
+                <div class="write-up">
+                    <p>
+                        Once we have pL and pR, which are the upper bridge points given TUpper, we repeat this process 
+                        iteratively by finding the bridge between pL and pumin and similarly between pR and pumax.
+                    </p>
+                </div>
+            </div><br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Step 10: </h3>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="write-up">
+                    <p>
+                        When we join all the bridges that we get we see that it forms a connected bridge which forms 
+                        the upper hull of the set of points.
+                    </p>
+                </div>
+
+                <div class="image-container1">
+                    <img height = "300" src="../css/kpsStep10.jpeg" alt="Image description">
+                </div>
+
+                
+            </div><br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Step 11: </h3>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="image-container1">
+                    <img height = "300" src="../css/kpsStep11.jpeg" alt="Image description">
+                </div>
+
+                <div class="write-up">
+                    <p>
+                        Similarly, we find lower bridge points using the same procedure but with 2 changes. In lower 
+                        bridge instead of MAX we have a MIN set, which contains points with minimum y-intercept. When 
+                        pairs have same coordinate we take the one with the least x-coordinate and similarly in candidate 
+                        updation as well the steps are mirrored so as the give the bottommost points instead of topmost 
+                        as we want to find the lower bridge.
+                    </p>
+                </div>
+            </div><br><br>
+
+            <div class = "row task2">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 task1"> 
+                    <h3 id = "ptHeading"> Step 12: </h3>
+                </div>
+            </div>
+
+            <div class = "row">
+                <div class="write-up">
+                    <p>
+                        Once we have lower bridge, we repeat same procedure as before and find lower hull and then join 
+                        upper and lower hulls in constant time. We now have the convex hull of the dataset.
+                    </p>
+                </div>
+                
+                <div class="image-container1">
+                    <img height = "300" src="../css/kpsStep12.jpeg" alt="Image description">
+                </div>
+
+                
+            </div><br><br>
+    </body>
+</html>

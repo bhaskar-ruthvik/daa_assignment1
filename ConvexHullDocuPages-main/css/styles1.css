@@ -1,0 +1,251 @@
+.content{
+   
+   
+    background-image: url(background2.jpg);
+    margin:0;
+}
+.carousel-item{
+    background-color: rgba(0,0,0,0.1);
+    border-radius:2rem;
+    padding-top:1rem;
+    padding-bottom:2rem;
+}
+.categories{
+    color: white;
+    text-decoration: underline;
+    font-family: 'Montserrat';
+    font-size: 2rem;
+    padding-bottom: 2rem;
+   
+}
+.col-lg-6.memory{
+    /* padding-left:22rem; */
+    padding-bottom:2rem;
+    /* padding-right: 8rem; */
+}
+.row.testcase .col-lg-6 p{
+    padding-right: 2rem;
+}
+p.memory{
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-right:2rem;
+}
+img.memory{
+    border-radius: 1rem;
+    
+}
+.img-bg{
+    background-color: black;
+    border-radius: 1rem;
+    
+    height: 15rem;
+}
+h3{ 
+    padding-top: 3rem;
+    color: white;
+    font-family: 'Kanit';
+}
+#ptHeading{
+    padding-top: 1rem;
+    color: white;
+    font-family: 'Kanit';
+}
+h2{
+    color: white;
+    /* text-decoration: underline; */
+}
+.row.testcase{
+    padding-top:3rem;
+    padding-bottom:3rem;
+   
+}
+.col-lg-6.left p,.col-lg-6.left h3{
+    padding-left:2rem;
+}
+.col-lg-6.test p{
+    padding-left: 0.3rem;
+}
+.col-lg-6.right.img{
+    padding-left:0.3rem;
+}
+.col-lg-6.img{
+    padding-left: 2rem;
+}
+.analysis{
+    position:relative; 
+    left:0.5rem;
+    top:1rem;
+    width: 95%;
+}
+.col-lg-12.sub{
+    padding-left: 2rem;
+}
+#task1{
+    background-image: url(background1.jpg);
+    height: fit-content;
+   
+}
+
+table{
+    background-color: rgba(47, 89, 103,0.8);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-top:2rem;
+    margin-bottom:2rem !important;
+}
+.col-lg-12.head,.col-lg-12.sub{
+    text-align: center;
+}
+.col-lg-8.task1{
+    text-align: center;
+}
+.row.carousel{
+   
+    padding-bottom:3rem;
+}
+button.test{
+    padding-top: 2rem;
+    height:2rem;
+}
+button.test.prev{
+    right: 5rem;
+    position: absolute
+}
+.row.task1{
+    display: flex;
+    align-items: center;
+    padding-bottom: 5rem;
+}
+.row.task2{
+    display: flex;
+    align-items: center;
+    padding-bottom: 2rem;
+}
+#Tasks .carousel-item{
+    padding-left: 12rem;
+    padding-right: 12rem;
+    padding-bottom: 5rem;
+    padding-top: 5rem;
+    background-color: rgba(0, 0, 0,0.0);
+    border-radius: 2rem;
+}
+.subhead{
+    font-family: 'Montserrat',sans-serif;
+    padding-top: 15rem;
+    font-size: 4rem;
+    text-decoration: underline;
+   padding-bottom: 2rem;
+    color: white;
+}
+#task1 p{
+    padding-left:3rem;
+    padding-right: 5rem;
+
+}
+.col-lg-2.code{
+    margin-left:3rem;
+}
+.task1-code{
+    border-radius: 1rem;
+    width:100%;
+    padding-top: 3rem;
+    padding-bottom:3rem;
+}
+.logic-head{
+    font-family: 'Montserrat',sans-serif;
+    padding-left: 3.5rem;
+    font-size: 4rem;
+    padding-top: 10rem;
+    color: white;
+    padding-bottom: 1.5rem;
+
+}
+.heading{
+    padding-top:3rem;
+}
+p{
+    padding-left: 3.5rem;
+    padding-right: 22rem;
+    font-family: 'Kanit',sans-serif;
+    font-size: 1rem;
+    color: white;
+  
+}
+.intro-code{
+    aspect-ratio: fixed;
+    height: 16rem;
+    border-radius : 1rem;
+    position : absolute;
+    right:4rem;
+}
+.carousel-head{
+    font-family: 'Ubuntu',sans-serif;
+    color: white;
+}
+p.carousel-text{
+    font-family: 'Ubuntu',sans-serif;
+    padding-left: 0;
+    padding-right: 1rem;
+}
+.code-snip{
+    padding-top: 12rem;
+   
+}
+nav.navbar{
+    padding-left:4rem;
+    padding-right: 4rem;
+    padding-top:2rem;
+}
+a.nav-link{
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+a.navbar-brand{
+    font-family: 'Kanit',sans-serif;
+    font-size: 1.5rem;
+}
+.row.main,.col-lg-6.main{
+    height: 45rem;
+
+}
+.row.main{
+    width:100%;
+}
+
+.container {
+    display: flex;
+    /* Make the container display elements flexibly */
+    margin: 20px;
+    /* Add some margin for spacing */
+    justify-content: center;
+}
+
+.image-container {
+    flex: 0 0 50%;
+    /* Set the width of the image container to 50% */
+}
+.image-container1{
+    flex:1
+}
+
+.image {
+    width: 100%;
+    height: 200px;
+    /* Set the image width to 100% of its container */
+}
+
+.write-up {
+    flex: 1;
+    /* Allow the write-up to fill the remaining space */
+    padding: 10px;
+    /* Add some padding for readability */
+    margin-left: 20px;
+}
+.algos{
+    text-align: center;
+}
+.tab {
+    padding-left: 20px;
+    /* Adjust the amount of spacing as needed */
+}
