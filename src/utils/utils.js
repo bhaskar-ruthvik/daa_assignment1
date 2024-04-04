@@ -88,7 +88,7 @@ export function distance(pointA, pointB){
 export function jarvisMarch(points){
     let n = points.length;
     if(n < 3)
-        return;
+        return points;
     
     let counter = 0;
     let p = findInitialOrigin(points);
@@ -213,6 +213,7 @@ export function kirkPatrickSeidel(S) {
     const res2 = isStraightY(S)
     if(res1.result) return [res1.ymin,res1.ymax]
     if(res2.result) return [res2.xmin,res2.xmax]
+    if(S.length==2) return S
     const minXPoints = findMinX(S);
     // console.log("Points with minimum x-coordinate:");
     // minXPoints.forEach(p => console.log(`(${findX(p)}, ${findY(p)})`));
@@ -798,6 +799,13 @@ export function isStraightY(S) {
     let xmin = minXCoodinate(S);
     let xmax = maxXCoodinate(S);
     return { result: true, xmin, xmax };
+}
+function runningTime(S){
+    let startTime;
+    startTime = performance.now();
+   let convexhull = kirkPatrickSeidel(S);
+    let elapsedTime = performance.now() - startTime;
+    return elapsedTime;
 }
 const points = [
     { x: 0, y: 2 },

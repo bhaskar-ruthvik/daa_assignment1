@@ -36,7 +36,7 @@ export default function Visualisation(props) {
       if(props.id!=null && props.id==1){navigate('/jarvisvisu/1')} 
       else {
         const res1 = isStraightX(pointsRef.current.map((item)=>{return {x: item.point[0],y: item.point[1]}}))
-        if(!res1.result){
+        if(!res1.result && pointsRef.current.length != 2){
           navigate('/kirkpatrickvisu/1')
         }else{
           navigate('/straightline')

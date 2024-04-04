@@ -15,8 +15,13 @@ export default function SinglePoint(props){
     useEffect(()=>{
         pointsRef.current = JSON.parse(window.localStorage.getItem("points"))
         if(props.id==1){
-            const res = isStraightX(pointsRef.current.map((item)=>{return {x: item.point[0],y: item.point[1]}}))
-            hullRef.current = [new Vector3(res.ymin.x,res.ymin.y,0),new Vector3(res.ymax.x,res.ymax.y,0)]
+            if(pointsRef.current.length==2){
+                hullRef.current = [new Vector3(pointsRef.current[0].point[0],pointsRef.current[0].point[1],0),new Vector3(pointsRef.current[1].point[0],pointsRef.current[1].point[1],0)]
+            }else{  
+                const res = isStraightX(pointsRef.current.map((item)=>{return {x: item.point[0],y: item.point[1]}}))
+                hullRef.current = [new Vector3(res.ymin.x,res.ymin.y,0),new Vector3(res.ymax.x,res.ymax.y,0)]
+            }
+        
         }
         else{
             hullRef.current= []
