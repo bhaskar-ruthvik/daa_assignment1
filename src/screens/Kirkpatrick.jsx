@@ -1,13 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import Typewriter from "../components/Typewriter";
-import DOTS from 'vanta/src/vanta.dots';
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Box, Line, OrbitControls, Point, Points } from '@react-three/drei';
-import { Vector3 } from "three";
+import { useNavigate, useParams } from "react-router-dom";
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
 import Graph from "../components/Graph";
-import { pointArray } from "../points";
-import { findMaxX, findMinX, findPLowerX, findPUpperX, findXMedian, kirkPatrickSeidel, lowerHull, returnInitStructures, returnUBstructures, upperBridge, upperHull, x } from "../utils/utils";
+import {  kirkPatrickSeidel, lowerHull, returnInitStructures, returnUBstructures, upperHull } from "../utils/utils";
 import CustomModal from "../components/Modal";
 export default function Kirkpatrick(props) {
   const params = useParams();
@@ -70,12 +66,6 @@ const [dp,setDp] = useState([])
   function handlePrev(){
     navigate(-1)
   }
-  // useFrame((state) => {
-  //   const { camera } = state;
-  //   const diff = targetPosition.sub(camera.position);
-  //   camera.position.lerp(targetPosition, easing); // Lerp for smooth transition
-  // });
-
   return (
     <div className="visualisation">
      <div className="close" >
@@ -93,7 +83,7 @@ const [dp,setDp] = useState([])
     <div className="center step">
     <h1 className="space-mono-regular" onClick={handleToggle}>{open ? 'Hide Step' : 'Show Step'}</h1>
     </div>
-<Canvas >
+<Canvas>
 <Graph points={pointsRef} minmax={maxMinRef} step={params.stepid} kps={kpsRef} xmedian={xMedianRef} tref={tRef} structRef={structRef} key={params.stepid}  grid={showGrid} axes={showAxes}/> 
    
     <OrbitControls/>

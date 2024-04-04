@@ -9,12 +9,9 @@ export default function StartPage(props){
     const [mute,setMute]= useState(true)
     function handleMute(){
       if(!mute){
-        
-        // document.getElementById('bgm').src = '';
         document.getElementById('bgm').pause()
         setMute(true)
       }else{
-        // document.getElementById('bgm').src = './audio/bg.mp3';
         document.getElementById('bgm').play()
         setMute(false)
       }
@@ -25,7 +22,6 @@ export default function StartPage(props){
     async function handleStart(){
         setStart(true)
         props.clickSound.current.play()
-        // document.getElementById('startButton').classList.remove('start');
         document.getElementById('startButton').classList.add('zoomed');
         await delay(500);
         navigate('/convexdef')
@@ -35,20 +31,17 @@ export default function StartPage(props){
         if(!mute){
             document.getElementById('bgm').play()
         }
-       
-      
-        
-            const handleKeyDown = (event) => {
-              if (event.key === 'Enter') {
-                handleStart()
-              }
-            };
-        
-            window.addEventListener('keydown', handleKeyDown);
+        const handleKeyDown = (event) => {
+          if (event.key === 'Enter') {
+            handleStart()
+          }
+        };
+    
+        window.addEventListener('keydown', handleKeyDown);
 
-            return () => {
-              window.removeEventListener('keydown', handleKeyDown);
-            };
+        return () => {
+          window.removeEventListener('keydown', handleKeyDown);
+        };
        
     },[])
     
@@ -62,13 +55,10 @@ export default function StartPage(props){
            <Typewriter text="Convex Hull Visualisation" />
            </div>
            <div className='canvas'>
-           {/* <Link to='/path' style={{textDecoration: 'none', color:'inherit'}}> */}
            <h1 className="space-mono-regular start" onClick={handleStart} id="startButton">{!start ? "> Press Enter to Start" : "<Start>"}</h1>
-           {/* </Link> */}
-         
            </div>
           <div>
-            <a href="https://www.github.com/bhaskar-ruthvik" className="space-mono-regular" target="_blank" style={{color: "inherit"}}><p  style={{textAlign: "center"}}>Link to Documentation</p></a>
+            <a href="https://nikhildhanaraj.github.io/ConvexHullDocuPages/" className="space-mono-regular" target="_blank" style={{color: "inherit"}}><p  style={{textAlign: "center"}}>Link to Documentation</p></a>
           </div>
            </div>
       

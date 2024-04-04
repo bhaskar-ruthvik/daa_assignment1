@@ -288,8 +288,8 @@ span {
 }
 
 .descdiv{
-  max-height: 60vh;
-  overflow: scroll;
+
+ 
   padding: 5vh 15vw;
 }
 
@@ -300,6 +300,10 @@ span {
   text-align: center;
 }
 
+.desc{
+  max-height: 60vh;
+  overflow: scroll;
+}
 .desc p{
   text-align: justify;
   font-size: 0.9rem;
@@ -314,4 +318,11 @@ span {
 
 .visualisation .close{
   padding: 0.2vh;
+}
+
+.parastory{
+  height: 10vh;
+  background-color: white;
+  color: black;
+  text-align: center;
 }

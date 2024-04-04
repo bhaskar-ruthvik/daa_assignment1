@@ -22,9 +22,9 @@ export default function AlgDesc(props){
 
     },[])
     return (
-        <div className="space-mono-bold ">
+        <div className="space-mono-bold descdiv">
         <h1 className="start alghead" >KirkPatrick-Seidel Algorithm</h1>
-            <div className="desc descdiv">
+            <div className="desc">
                 {steps[parseInt(props.id)].map((item,index)=>{
                    return <div>
                    <p>{index+1}. {item}<br /></p>

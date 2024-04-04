@@ -1,12 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import Typewriter from "../components/Typewriter";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import click from '../assets/audio/click1.mp3'
 import DOTS from 'vanta/src/vanta.dots';
 import StartPage from "./StartPage";
+
 export default function Home(props) {
-    const [page,setPage] = useState(0)
-    const [select,setSelect] = useState(0)
     const clickAudioRef = useRef()
 
 

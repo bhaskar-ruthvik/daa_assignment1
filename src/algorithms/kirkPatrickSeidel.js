@@ -99,14 +99,16 @@ function minYIntercept(points, k) {
 }
 
 function kirkPatrickSeidel(S) {
-    const minXPoints = findMinX(points);
+    const minXPoints = findMinX(S);
     // console.log("Points with minimum x-coordinate:");
-    // minXPoints.forEach(p => console.log(`(${x(p)}, ${y(p)})`));
+    // minXPoints.forEach(p => console.log((${x(p)}, ${y(p)})));
 
-    const maxXPoints = findMaxX(points);
+    const maxXPoints = findMaxX(S);
     // console.log("\nPoints with maximum x-coordinate:");
-    // maxXPoints.forEach(p => console.log(`(${x(p)}, ${y(p)})`));
-
+    // maxXPoints.forEach(p => console.log((${x(p)}, ${y(p)})));
+    if(S.length === 0){
+        return S;
+    }
     const pumin = findPUpperX(minXPoints);
     const pumax = findPUpperX(maxXPoints);
     const plmin = findPLowerX(minXPoints);
@@ -134,6 +136,13 @@ function kirkPatrickSeidel(S) {
 
 function upperHull(pmin, pmax, T) {
     if (T.length <= 2) {
+        if (T.length == 2) {
+            if (T[0].x > T[1].x) {
+                let temp = T[0];
+                T[0] = T[1];
+                T[1] = temp;
+            }
+        }
         return T;
     }
     alpha = findXMedian(T);
@@ -144,8 +153,7 @@ function upperHull(pmin, pmax, T) {
     // console.log("Points in TRight:", TRight);
     // const pL = maxXCoodinate(TLeft);
     // const pR = minXCoodinate(TRight);
-    let structs = returnUBstructures(T, alpha);
-    let [pL,pR] = [structs.pL,structs.pR]
+    let [pL, pR] = upperBridge(T, alpha);
     // console.log(pL);
     // console.log(pR);
     if (pL.x > pR.x) {
@@ -156,27 +164,35 @@ function upperHull(pmin, pmax, T) {
     // console.log(pL, pR);
 
     TLeftFiltered = TLeft.filter(point => determinant(pL, pmin, point) > 0);
-    TLeftFiltered.push(pL);
-    if (pmin != pL) TLeftFiltered.push(pmin);
+    TLeftFiltered.unshift(pmin);
+    if (pmin != pL) TLeftFiltered.push(pL);
     // console.log("\nPoints in TLeft:", TLeftFiltered);
+    const leftHullPoints = upperHull(pmin, pL, TLeftFiltered);
+
+
     TRightFiltered = TRight.filter(point => determinant(pR, pmax, point) < 0);
-    TRightFiltered.push(pR);
+    TRightFiltered.unshift(pR);
     if (pmax != pR) TRightFiltered.push(pmax);
     // console.log("Points in TRight:", TRightFiltered);
-
-    const leftHullPoints = upperHull(pmin, pL, TLeftFiltered);
     const rightHullPoints = upperHull(pR, pmax, TRightFiltered);
 
     const combinedPoints = [...leftHullPoints, ...rightHullPoints];
     const uniquePointsSet = new Set(combinedPoints.map(point => JSON.stringify(point)));
     const upperHullPoints = Array.from(uniquePointsSet).map(point => JSON.parse(point));
-    upperHullPoints.sort((point1, point2) => point1.x - point2.x);
+    // upperHullPoints.sort((point1, point2) => point1.x - point2.x);
     // console.log(upperHullPoints);
     return upperHullPoints;
 }
 
 function lowerHull(pmin, pmax, T) {
     if (T.length <= 2) {
+        if (T.length == 2) {
+            if (T[0].x < T[1].x) {
+                let temp = T[0];
+                T[0] = T[1];
+                T[1] = temp;
+            }
+        }
         return T;
     }
     alpha = findXMedian(T);
@@ -189,26 +205,26 @@ function lowerHull(pmin, pmax, T) {
         pR = temp;
     }
     TLeftFiltered = TLeft.filter(point => determinant(pL, pmin, point) < 0);
-    TLeftFiltered.push(pL);
+    TLeftFiltered.unshift(pL);
     if (pmin != pL) TLeftFiltered.push(pmin);
-    TRightFiltered = TRight.filter(point => determinant(pR, pmax, point) > 0);
-    TRightFiltered.push(pR);
-    if (pmax != pR) TRightFiltered.push(pmax);
-
     const leftHullPoints = lowerHull(pmin, pL, TLeftFiltered);
+
+    TRightFiltered = TRight.filter(point => determinant(pR, pmax, point) > 0);
+    TRightFiltered.unshift(pmax);
+    if (pmax != pR) TRightFiltered.push(pR);
     const rightHullPoints = lowerHull(pR, pmax, TRightFiltered);
 
-    const combinedPoints = [...leftHullPoints, ...rightHullPoints];
+    const combinedPoints = [...rightHullPoints, ...leftHullPoints];
     const uniquePointsSet = new Set(combinedPoints.map(point => JSON.stringify(point)));
     const lowerHullPoints = Array.from(uniquePointsSet).map(point => JSON.parse(point));
-    lowerHullPoints.sort((point1, point2) => point2.x - point1.x);
+    // lowerHullPoints.sort((point1, point2) => point2.x - point1.x);
     // console.log("lower bridge ", lowerHullPoints);
     return lowerHullPoints;
 
 }
 
 function upperBridge(S, alpha) {
-
+    S.sort((a, b) => a.x - b.x);
     if (S.length <= 2) {
         return S;
     }
@@ -258,6 +274,9 @@ function upperBridge(S, alpha) {
                 k.push([point1, point2, t]);
             }
         }
+    }
+    if (k.length == 0) {
+        return upperBridge(candidates, alpha);
     }
     // console.log("candidates", candidates);
     const slopeMedian = findKmedian(k);
@@ -311,169 +330,9 @@ function upperBridge(S, alpha) {
     return upperBridge(candidates, alpha);
 }
 
-
-function upperBridgeModified(S, alpha,candidateList,pairsList,SList,kList,KList,smallList,equalList,largeList,maxList,pmList,pkList) {
-    SList.push(S);
-    if (S.length <= 2) {
-        return S;
-    }
-    let candidates = [];
-    let pairs = [];
-    if (S.length % 2 === 1) {
-        candidates.push(S[S.length - 1]);
-        for (let i = 0; i < S.length - 1; i += 2) {
-            pairs.push([S[i], S[i + 1]]);
-        }
-    } else {
-        for (let i = 0; i < S.length; i += 2) {
-            pairs.push([S[i], S[i + 1]]);
-        }
-    }
-
-    for (let i = 0; i < pairs.length; i++) {
-        let point1 = pairs[i][0];
-        let point2 = pairs[i][1];
-        if (point1.x > point2.x) {
-            pairs[i][0] = point2;
-            pairs[i][1] = point1;
-        }
-    }
-
-
- 
-    let k = [];
-    if (pairs.length === 1) {
-        let point1 = pairs[0][0];
-        let point2 = pairs[0][1];
-        let t = (point1.y - point2.y) / (point1.x - point2.x);
-        k.push([point1, point2, t]);
-    } else {
-        for (let i = 0; i < pairs.length; i++) {
-            let pair = pairs[i];
-            let point1 = pair[0];
-            let point2 = pair[1];
-            if (point1.x === point2.x) {
-                if (point1.y > point2.y) {
-                    candidates.push(point1);
-                } else {
-                    candidates.push(point2);
-                }
-            } else {
-                let t = (point1.y - point2.y) / (point1.x - point2.x);
-                k.push([point1, point2, t]);
-            }
-        }
-    }
-    // console.log("candidates", candidates);
-    const slopeMedian = findKmedian(k);
-    let large = [];
-    let equal = [];
-    let small = [];
-    for (let i = 0; i < k.length; i++) {
-        if (k[i][2] < slopeMedian) {
-            small.push([k[i][0], k[i][1]]);
-        } else if (k[i][2] > slopeMedian) {
-            large.push([k[i][0], k[i][1]]);
-        } else {
-            equal.push([k[i][0], k[i][1]]);
-        }
-    }
-    if(k.length == 0) return upperBridgeModified(candidates,alpha,candidateList,pairsList,SList,kList,KList,smallList,equalList,largeList,maxList,pmList,pkList)
-    const max = maxYIntercept(S, slopeMedian);
-    
-    const pm = maxXCoodinate(max);
-  
-    const pk = minXCoodinate(max);
- 
-    if (pm.x <= alpha) {
-        for (let i = 0; i < large.length; i++) {
-            candidates.push(large[i][1]);
-        } for (let i = 0; i < equal.length; i++) {
-            candidates.push(equal[i][1]);
-        } for (let i = 0; i < small.length; i++) {
-            candidates.push(small[i][0]);
-            candidates.push(small[i][1]);
-        }
-    }
-    if (pk.x > alpha) {
-        for (let i = 0; i < small.length; i++) {
-            candidates.push(small[i][0]);
-        } for (let i = 0; i < equal.length; i++) {
-            candidates.push(equal[i][0]);
-        } for (let i = 0; i < large.length; i++) {
-            candidates.push(large[i][0]);
-            candidates.push(large[i][1]);
-        }
-    }
-     pairsList.push(pairs);
-     candidateList.push(candidates);
-     kList.push(k);
-     KList.push(slopeMedian);
-     largeList.push(large);
-     equalList.push(equal);
-     smallList.push(small);
-    maxList.push(max);
-    pmList.push(pm);
-    pkList.push(pk);
-    
-
-      if (pm.x > alpha && pk.x <= alpha) {
-        return [pk, pm];
-    }
-    return upperBridgeModified(candidates, alpha,candidateList,pairsList,SList,kList,KList,smallList,equalList,largeList,maxList,pmList,pkList);
-}
-function returnInitStructures(pointsArr){
-    const T = pointsArr
-    const minX = findMinX(pointsArr)
-    const maxX = findMaxX(pointsArr)
-    const pumin = findPUpperX(minX);
-    const pumax = findPUpperX(maxX);
-    const plmin = findPLowerX(minX);
-    const plmax = findPLowerX(maxX);
-
-
-   
-  const median = findXMedian(T)
-  const TUpper = [pumin].concat(T.filter(p => x(pumin) < x(p) && x(p) < x(pumax))).concat([pumax]);
-  const TLower = [plmin].concat(T.filter(p => x(plmin) < x(p) && x(p) < x(plmax))).concat([plmax]);
-  
-  const TLeft = TUpper.filter(point => point.x <= median);
-  const TRight = TUpper.filter(point => point.x >= median);
-  return [T,pumin,pumax,plmin,plmax,median,TUpper,TLower,TLeft,TRight]
-}
-function returnUBstructures(S,alpha){
-    const candidateList = [];
-    const pairsList = [];
-    const SList = [];
-    const kList = [];
-    const KList= [];
-    const smallList = [];
-    const equalList = [];
-    const largeList = [];
-    const maxList = [];
-    const pkList = [];
-    const pmList = [];
-    const [pl,pr] = upperBridgeModified(S, alpha,candidateList,pairsList,SList,kList,KList,smallList,equalList,largeList,maxList,pmList,pkList);
-
-    return {
-        pL : pl,
-        pR : pr,
-        candidates: candidateList,
-        pairs: pairsList,
-        S: SList,
-        k: kList,
-        K: KList,
-        small: smallList,
-        equal: equalList,
-        large: largeList,
-        max: maxList,
-        pk: pkList,
-        pm: pmList
-    }
-
-}
 function lowerBridge(S, alpha) {
     // console.log("S length", S.length);
+    S.sort((a, b) => b.x - a.x);
     if (S.length <= 2) {
         return S;
     }
@@ -525,7 +384,9 @@ function lowerBridge(S, alpha) {
     }
     // console.log("candidates", candidates);
     // console.log("k: ", k);
-
+    if (k.length == 0) {
+        return lowerBridge(candidates, alpha);
+    }
     const slopeMedian = findKmedian(k);
 
     let large = [];
@@ -575,21 +436,5 @@ function lowerBridge(S, alpha) {
         }
     }
     // console.log("candidates", candidates);
-    return lowerBridge(candidates, alpha);
+    return lowerBridge(candidates, alpha);
 }
-
-const points = [
-    { x: 0, y: 0 },
-    { x: 0, y: 1 },
-    { x: 1, y: 0 },
-
-    //{ x: 6, y: 2 },
-    { x: 1, y: 2 },
-    { x: 2, y: 1 },
-    // { x: 3, y: 6 },
-    // { x: 3, y: -2 },
-];
-//console.log(points.filter((point)=>determinant(points[0],points[1],point)>=0));
-let [T,pumin,pumax,plmin,plmax,median,TUpper,TLower,TLeft,TRight] = returnInitStructures(points);
-convexhull = returnUBstructures(points);
-console.log(convexhull);

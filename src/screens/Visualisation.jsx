@@ -6,7 +6,7 @@ import { Vector3 } from "three";
 import Graph from "../components/Graph";
 import { pointArray } from "../points";
 import JarvisGraph from "../components/JarvisGraph";
-import { convertPoints, generateRandomPoints } from "../utils/utils";
+import { convertPoints, generateRandomPoints, isStraightX, isStraightY } from "../utils/utils";
 export default function Visualisation(props) {
   
   const navigate = useNavigate();
@@ -26,8 +26,25 @@ export default function Visualisation(props) {
     const [showAxes,setShowAxes] = useState(true)
   function handleStart(){
     window.localStorage.setItem("points",JSON.stringify(pointsRef.current))
-   if(props.id!=null && props.id==1){navigate('/jarvisvisu/1')} 
-   else {navigate('/kirkpatrickvisu/1')}
+    if(pointsRef.current.length>1000){
+      if(props.id!=null && props.id==1){navigate('/jarvisvisu/202121031')} 
+      else {navigate('/kirkpatrickvisu/202121031')}
+    }else if(pointsRef.current.length<=1){
+      navigate('/singlepoint')
+    }
+    else{
+      if(props.id!=null && props.id==1){navigate('/jarvisvisu/1')} 
+      else {
+        const res1 = isStraightX(pointsRef.current.map((item)=>{return {x: item.point[0],y: item.point[1]}}))
+        if(!res1.result){
+          navigate('/kirkpatrickvisu/1')
+        }else{
+          navigate('/straightline')
+        }
+       
+      }
+    }
+ 
   }
   function handleRandom(){
     const points = generateRandomPoints(numPoints)
@@ -86,7 +103,7 @@ export default function Visualisation(props) {
   <input type="file" className="fileip" id="fileip" onChange={handleUpload}></input>
   </div>
   <div className="center">
-    <h1 className="space-mono-regular start" onClick={handleStart}>Start Visualisation</h1>
+    <h1 className="space-mono-regular start" onClick={handleStart}>{pointsRef.current.length <= 1000 ? "Start Visualisation" : "See Convex Hull"}</h1>
     </div>
 <Canvas onDoubleClick={addPoint}>
 

@@ -209,6 +209,10 @@ export function minYIntercept(points, k) {
 }
 
 export function kirkPatrickSeidel(S) {
+    const res1 = isStraightX(S)
+    const res2 = isStraightY(S)
+    if(res1.result) return [res1.ymin,res1.ymax]
+    if(res2.result) return [res2.xmin,res2.xmax]
     const minXPoints = findMinX(S);
     // console.log("Points with minimum x-coordinate:");
     // minXPoints.forEach(p => console.log(`(${findX(p)}, ${findY(p)})`));
@@ -592,7 +596,7 @@ export function returnUBstructures(S,alpha){
 
 export function lowerBridge(S, alpha) {
     // console.log("S length", S.length);
-    S.sort((a,b)=>a.x- b.x)
+    S.sort((a,b)=>b.x- a.x)
     if (S.length <= 2) {
         return S;
     }
@@ -698,11 +702,30 @@ export function lowerBridge(S, alpha) {
 }
 export function generateRandomPoints(n){
     let points = []
-    for(let i=0;i<n;i++){
-        points.push({
-            point: [Math.random()*12-6,Math.random()*6-3,0]
-        })
+
+    if(n<=1000){
+        for(let i=0;i<n;i++){
+            points.push({
+                point: [Math.random()*12-6,Math.random()*6-3,0]
+            })
+        }
+    }else{
+        if(n<10000){
+            for(let i=0;i<n;i++){
+                points.push({
+                    point: [Math.random()*18-9,Math.random()*9-4.5,0]
+                })
+            }
+        }else{
+            for(let i=0;i<10000;i++){
+                points.push({
+                    point: [Math.random()*18-9,Math.random()*9-4.5,0]
+                })
+            }
+        }
+        
     }
+    
     return points
 }
 export function convertPoints(points){
@@ -710,14 +733,80 @@ export function convertPoints(points){
         point: [point.x, point.y, 0],
       }));
 }
+
+function maxYCoordinate(points) {
+    let maxPoint = points[0];
+    for (let i = 1; i < points.length; i++) {
+        if (points[i].y > maxPoint.y) {
+            maxPoint = points[i];
+        }
+    }
+    return maxPoint;
+}
+
+function minYCoordinate(points) {
+    let minPoint = points[0];
+    for (let i = 1; i < points.length; i++) {
+        if (points[i].y < minPoint.y) {
+            minPoint = points[i];
+        }
+    }
+    return minPoint;
+}
+
+export function isStraightX(S) {
+    let point = {x:0, y:0};
+    if (S.length == 0) {
+        return {result:true, ymin:point, ymax:point};
+    }
+
+    if (S.length == 1) {
+        return {result:true, xmin:S[0], xmax:S[0]};
+    }
+
+    const firstX = S[0].x;
+    
+    for (let i = 1; i < S.length; i++) {
+        if (S[i].x != firstX) {
+            
+            return {result:false, ymin:point, ymax:point};
+        }
+    }
+    let ymin = minYCoordinate(S);
+    let ymax = maxYCoordinate(S);
+    return { result: true, ymin, ymax };
+}
+
+export function isStraightY(S) {
+    let point = {x:0, y:0};
+    if (S.length == 0) {
+        return {result:true, xmin:point, xmax:point};
+    }
+
+    if (S.length == 1) {
+        return {result:true, xmin:S[0], xmax:S[0]};
+    }
+
+    const firstY = S[0].y;
+
+    for (let i = 1; i < S.length; i++) {
+        if (S[i].y != firstY) {
+            return { result: false, xmin:point, xmax:point};
+        }
+    }
+
+    let xmin = minXCoodinate(S);
+    let xmax = maxXCoodinate(S);
+    return { result: true, xmin, xmax };
+}
 const points = [
     { x: 0, y: 2 },
-    { x: 2, y: 4 },
-    { x: 4, y: 0 },
+    { x: 0, y: 4 },
+    { x: 0, y: 6 },
 
     //{ x: 6, y: 2 },
-    { x: 4, y: 4 },
-    { x: 2, y: 0 },
+    { x: 0, y: 8 },
+    { x: 0, y: 10 },
     // { x: 3, y: 6 },
     // { x: 3, y: -2 },
 ];

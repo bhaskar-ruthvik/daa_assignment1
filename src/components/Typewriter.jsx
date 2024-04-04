@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import typing from '../assets/audio/type.mp3'
+import PropTypes from 'prop-types'
+
+Typewriter.propTypes = {
+  text: PropTypes.string.isRequired,
+  size: PropTypes.oneOf(['small','large'])
+}
 
 export default function Typewriter(props){
   const [text, setText] = useState('');
-  const [audio,setAudio] = useState();
   const [cursorVisible, setCursorVisible] = useState(true);
   const typingSpeed = 80; // Adjust typing speed in milliseconds
   const completeText = props.text;
@@ -41,3 +46,5 @@ export default function Typewriter(props){
     </div>
   );
 };
+
+

@@ -2,6 +2,14 @@ import { Line } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { useState } from "react"
 import { Vector3 } from "three"
+import PropTypes, { number } from 'prop-types'
+
+AnimatedLine.propTypes = {
+    points: PropTypes.arrayOf(Vector3),
+    speed: PropTypes.number,
+    color: PropTypes.string,
+    lineWidth: PropTypes.number
+}
 
 export default function AnimatedLine(props){
     const start = props.points[0]
