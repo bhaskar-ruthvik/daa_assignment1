@@ -73,7 +73,7 @@ function distance(pointA, pointB){
 function jarvisMarch(points){
     let n = points.length;
     if(n < 3)
-        return;
+        return points;
     
     let counter = 0;
     p = findInitialOrigin(points);

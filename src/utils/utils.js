@@ -800,10 +800,17 @@ export function isStraightY(S) {
     let xmax = maxXCoodinate(S);
     return { result: true, xmin, xmax };
 }
-function runningTime(S){
+export function runningTimeKps(S){
     let startTime;
     startTime = performance.now();
    let convexhull = kirkPatrickSeidel(S);
+    let elapsedTime = performance.now() - startTime;
+    return elapsedTime;
+}
+export function runningTimeJM(S){
+    let startTime;
+    startTime = performance.now();
+   let convexhull = jarvisMarch(S);
     let elapsedTime = performance.now() - startTime;
     return elapsedTime;
 }

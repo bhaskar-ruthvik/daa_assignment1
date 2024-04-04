@@ -16,6 +16,44 @@ function findMaxX(points) {
     return points.filter(p => x(p) === maxX);
 }
 
+function maxXCoordinate(points) {
+    let maxPoint = points[0];
+    for (let i = 1; i < points.length; i++) {
+        if (points[i].x > maxPoint.x) {
+            maxPoint = points[i];
+        }
+    }
+    return maxPoint;
+}
+
+function minXCoordinate(points) {
+    let minPoint = points[0];
+    for (let i = 1; i < points.length; i++) {
+        if (points[i].x < minPoint.x) {
+            minPoint = points[i];
+        }
+    }
+    return minPoint;
+}
+function maxYCoordinate(points) {
+    let maxPoint = points[0];
+    for (let i = 1; i < points.length; i++) {
+        if (points[i].y > maxPoint.y) {
+            maxPoint = points[i];
+        }
+    }
+    return maxPoint;
+}
+
+function minYCoordinate(points) {
+    let minPoint = points[0];
+    for (let i = 1; i < points.length; i++) {
+        if (points[i].y < minPoint.y) {
+            minPoint = points[i];
+        }
+    }
+    return minPoint;
+}
 function findPUpperX(points) {
     let currentMax = points[0];
     for (let i = 1; i < points.length; i++) {
@@ -58,7 +96,7 @@ function findXMedian(points) {
     }
 }
 
-function maxXCoodinate(points) {
+function maxXCoordinate(points) {
     let maxPoint = points[0];
     for (let i = 1; i < points.length; i++) {
         if (points[i].x > maxPoint.x) {
@@ -68,7 +106,7 @@ function maxXCoodinate(points) {
     return maxPoint;
 }
 
-function minXCoodinate(points) {
+function minXCoordinate(points) {
     let minPoint = points[0];
     for (let i = 1; i < points.length; i++) {
         if (points[i].x < minPoint.x) {
@@ -99,6 +137,11 @@ function minYIntercept(points, k) {
 }
 
 function kirkPatrickSeidel(S) {
+    const res1 = isStraightX(S)
+    const res2 = isStraightY(S)
+    if(res1.result) return [res1.ymin,res1.ymax]
+    if(res2.result) return [res2.xmin,res2.xmax]
+    if(S.length==2) return S
     const minXPoints = findMinX(S);
     // console.log("Points with minimum x-coordinate:");
     // minXPoints.forEach(p => console.log((${x(p)}, ${y(p)})));
@@ -151,8 +194,8 @@ function upperHull(pmin, pmax, T) {
     const TRight = T.filter(point => point.x >= alpha);
     // console.log("\nPoints in TLeft:", TLeft);
     // console.log("Points in TRight:", TRight);
-    // const pL = maxXCoodinate(TLeft);
-    // const pR = minXCoodinate(TRight);
+    // const pL = maxXCoordinate(TLeft);
+    // const pR = minXCoordinate(TRight);
     let [pL, pR] = upperBridge(T, alpha);
     // console.log(pL);
     // console.log(pR);
@@ -298,9 +341,9 @@ function upperBridge(S, alpha) {
     // console.log("Slope Median:", slopeMedian);
     // console.log("alpha", alpha);
     // console.log("max: ", max);
-    const pm = maxXCoodinate(max);
+    const pm = maxXCoordinate(max);
     // console.log(pm);
-    const pk = minXCoodinate(max);
+    const pk = minXCoordinate(max);
     // console.log(pk);
     if (pm.x > alpha && pk.x <= alpha) {
         return [pk, pm];
@@ -408,8 +451,8 @@ function lowerBridge(S, alpha) {
     // console.log("alpha", alpha);
     // console.log("min: ", min);
 
-    const pm = maxXCoodinate(min);
-    const pk = minXCoodinate(min);
+    const pm = maxXCoordinate(min);
+    const pk = minXCoordinate(min);
     // console.log(pm);
     // console.log(pk);
     if (pm.x > alpha && pk.x <= alpha) {
@@ -437,4 +480,50 @@ function lowerBridge(S, alpha) {
     }
     // console.log("candidates", candidates);
     return lowerBridge(candidates, alpha);
+}
+
+function isStraightX(S) {
+    let point = {x:0, y:0};
+    if (S.length == 0) {
+        return {result:true, ymin:point, ymax:point};
+    }
+
+    if (S.length == 1) {
+        return {result:true, xmin:S[0], xmax:S[0]};
+    }
+
+    const firstX = S[0].x;
+    
+    for (let i = 1; i < S.length; i++) {
+        if (S[i].x != firstX) {
+            
+            return {result:false, ymin:point, ymax:point};
+        }
+    }
+    let ymin = minYCoordinate(S);
+    let ymax = maxYCoordinate(S);
+    return { result: true, ymin, ymax };
+}
+
+function isStraightY(S) {
+    let point = {x:0, y:0};
+    if (S.length == 0) {
+        return {result:true, xmin:point, xmax:point};
+    }
+
+    if (S.length == 1) {
+        return {result:true, xmin:S[0], xmax:S[0]};
+    }
+
+    const firstY = S[0].y;
+
+    for (let i = 1; i < S.length; i++) {
+        if (S[i].y != firstY) {
+            return { result: false, xmin:point, xmax:point};
+        }
+    }
+
+    let xmin = minXCoordinate(S);
+    let xmax = maxXCoordinate(S);
+    return { result: true, xmin, xmax };
 }
